@@ -113,7 +113,9 @@ struct StageView: View {
     // MARK: Controls
 
     private func controls(_ tally: Tally, safeArea: EdgeInsets) -> some View {
-        let ink = theme.onTallyBase(tally.colorIndex)
+        // Each row of controls takes the ink of whatever it sits on: the liquid or the empty part.
+        let ink = tally.fillLevel > 0.86 ? theme.onTally(tally.colorIndex) : theme.onTallyBase(tally.colorIndex)
+        let bottomInk = tally.fillLevel > 0.1 ? theme.onTally(tally.colorIndex) : theme.onTallyBase(tally.colorIndex)
         return VStack {
             HStack(spacing: Space.m) {
                 GlassIconButton(systemImage: "chevron.down", tint: ink, label: "Close") { close() }
@@ -161,7 +163,7 @@ struct StageView: View {
                 } label: {
                     Text(tally.direction == .up ? "−\(tally.undoStep)" : "+\(tally.undoStep)")
                         .font(theme.numeralFont(.title3, weight: .heavy))
-                        .foregroundStyle(ink)
+                        .foregroundStyle(bottomInk)
                         .frame(minWidth: 64, minHeight: 56)
                         .contentShape(Capsule())
                 }
@@ -178,7 +180,7 @@ struct StageView: View {
                     } label: {
                         Label("Finish", systemImage: "flag.checkered")
                             .font(.headline)
-                            .foregroundStyle(ink)
+                            .foregroundStyle(bottomInk)
                             .padding(.horizontal, Space.l)
                             .frame(minHeight: 56)
                             .contentShape(Capsule())
@@ -192,7 +194,7 @@ struct StageView: View {
                 Button { confirmReset = true } label: {
                     Image(systemName: "arrow.counterclockwise")
                         .font(.system(size: 20, weight: .bold))
-                        .foregroundStyle(ink)
+                        .foregroundStyle(bottomInk)
                         .frame(width: 56, height: 56)
                         .contentShape(Circle())
                 }

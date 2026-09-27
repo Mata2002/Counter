@@ -58,6 +58,7 @@ jobs:
           xcrun simctl status_bar "$UDID" override --time "9:41" --batteryLevel 100 --cellularBars 4 --wifiBars 3
           APP=$(find build/Build/Products -maxdepth 2 -name "Tallyho.app" | head -1)
           xcrun simctl install "$UDID" "$APP"
+          xcrun simctl spawn "$UDID" defaults read com.apple.Accessibility ReduceMotionEnabled || echo "ReduceMotionEnabled not set"
           mkdir -p shots
           shot () {
             name=$1; shift
@@ -71,7 +72,7 @@ jobs:
           shot 03-stage-down-nightshift -theme nightshift -screen stagedown
           shot 04-home-nightshift -theme nightshift
           shot 05-stage-free-chalk -theme chalk -screen stagefree
-          WAIT=2 shot 06-celebrate-riso -theme riso -screen celebrate
+          WAIT=3 shot 06-celebrate-riso -theme riso -screen celebrate
           shot 07-editor-sorbet -theme sorbet -screen editor
           shot 08-settings-espresso -theme espresso -screen settings
           shot 09-themes-riso -theme riso -screen themes
@@ -80,7 +81,7 @@ jobs:
           shot 12-home-ghost-citrus -theme citrus -ghost
           shot 13-stage-blueprint -theme blueprint -screen stage
           shot 14-stage-halloween -theme halloween -screen stage
-          WAIT=2 shot 15-celebrate-christmas -theme christmas -screen celebrate
+          WAIT=3 shot 15-celebrate-christmas -theme christmas -screen celebrate
           shot 16-new-tally-nowruz -theme nowruz -screen new
           shot 17-archive-valentine -theme valentine -screen archive
           xcrun simctl ui "$UDID" appearance dark

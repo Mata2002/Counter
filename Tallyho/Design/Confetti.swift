@@ -9,14 +9,19 @@ struct Confetti: View {
     var count = 140
 
     private struct Particle {
-        let x: CGFloat, y: CGFloat          // launch point (0...1)
+        let x: CGFloat, y: CGFloat          // launch point (0...1); y < 0 means above the screen
         let vx: CGFloat, vy: CGFloat        // launch velocity (points/s)
+        let fall: CGFloat                   // terminal falling speed (points/s)
+        let sway: CGFloat, swaySpeed: Double
         let spin: Double, rotation: Double
         let size: CGFloat
         let color: Int
         let shape: Int
         let delay: Double
     }
+
+    /// How long the show lasts before the timeline stops.
+    static let duration: Double = 7
 
     private var particles: [Particle] {
         var seed: UInt64 = 0xC0FFEE
@@ -25,41 +30,48 @@ struct Confetti: View {
             return CGFloat(seed >> 33) / CGFloat(UInt32.max >> 1)
         }
         return (0..<count).map { i in
+            // The first half bursts out of the middle; the rest rains from the top for a few seconds.
             let burst = i < count / 2
-            let angle = burst ? rand() * .pi * 2 : .pi / 2 + (rand() - 0.5) * 0.6
-            let speed = burst ? 260 + rand() * 520 : 40 + rand() * 120
+            let angle = burst ? -.pi / 2 + (rand() - 0.5) * 2.4 : 0
+            let speed = burst ? 500 + rand() * 900 : 0
             return Particle(
-                x: burst ? 0.5 : rand(), y: burst ? 0.45 : -0.05,
-                vx: cos(angle) * speed, vy: burst ? -abs(sin(angle)) * speed - 120 : sin(angle) * speed,
-                spin: Double(rand() - 0.5) * 12, rotation: Double(rand()) * .pi * 2,
+                x: burst ? 0.5 : rand(), y: burst ? 0.45 : -0.04,
+                vx: CGFloat(cos(Double(angle))) * speed, vy: CGFloat(sin(Double(angle))) * speed,
+                fall: 110 + rand() * 120,
+                sway: 8 + rand() * 18, swaySpeed: 2 + Double(rand()) * 3,
+                spin: Double(rand() - 0.5) * 10, rotation: Double(rand()) * .pi * 2,
                 size: 10 + rand() * 16,
                 color: Int(rand() * 97),
                 shape: Int(rand() * 97),
-                delay: burst ? Double(rand()) * 0.15 : 0.2 + Double(rand()) * 1.4
+                delay: burst ? Double(rand()) * 0.12 : 0.3 + Double(rand()) * 2.6
             )
         }
     }
 
+    @State private var finished = false
+
     var body: some View {
         let parts = particles
-        TimelineView(.animation) { timeline in
+        TimelineView(.animation(minimumInterval: nil, paused: finished)) { timeline in
             let elapsed = timeline.date.timeIntervalSince(start)
             Canvas { context, size in
-                let gravity: CGFloat = 520
+                // Air drag: launch speed dies off quickly, then each piece drifts down at its own pace.
+                let drag: CGFloat = 2.4
                 for p in parts {
                     let t = CGFloat(elapsed - p.delay)
                     guard t > 0 else { continue }
-                    let ox = (origin?.x ?? size.width * p.x)
+                    let ox = origin?.x ?? size.width * p.x
                     let oy = p.y < 0 ? size.height * p.y : (origin?.y ?? size.height * p.y)
-                    let drag: CGFloat = 0.55
-                    let x = ox + p.vx * t * drag + CGFloat(sin(Double(t) * 3 + p.rotation)) * 14
-                    let y = oy + p.vy * t * drag + 0.5 * gravity * t * t * 0.55
-                    guard y < size.height + 40, x > -40, x < size.width + 40 else { continue }
-                    let fade = max(0, min(1, 3.4 - Double(t) * 0.9))
+                    let slowed = (1 - CGFloat(exp(-Double(drag * t)))) / drag
+                    let x = ox + p.vx * slowed + CGFloat(sin(Double(t) * p.swaySpeed + p.rotation)) * p.sway
+                    let y = oy + p.vy * slowed + p.fall * (t - slowed)
+                    guard y < size.height + 40, y > -80, x > -40, x < size.width + 40 else { continue }
                     var ctx = context
-                    ctx.opacity = fade
+                    ctx.opacity = max(0, min(1, 5.5 - Double(t)))
                     ctx.translateBy(x: x, y: y)
+                    // Flip like paper: squash one axis as it tumbles.
                     ctx.rotate(by: .radians(p.rotation + p.spin * Double(t)))
+                    ctx.scaleBy(x: 1, y: max(0.25, abs(CGFloat(cos(Double(t) * p.swaySpeed * 1.3 + p.rotation)))))
                     let color = colors.isEmpty ? Color.white : colors[p.color % colors.count]
                     draw(&ctx, p.shape, p.size, color)
                 }
@@ -76,6 +88,11 @@ struct Confetti: View {
         }
         .allowsHitTesting(false)
         .accessibilityHidden(true)
+        .task {
+            let remaining = Self.duration - Date().timeIntervalSince(start)
+            if remaining > 0 { try? await Task.sleep(for: .seconds(remaining)) }
+            finished = true
+        }
     }
 
     private var symbolNames: [String] {
@@ -141,9 +158,9 @@ struct Confetti: View {
         return p
     }
 
-    /// Three staggered bursts of sparks.
+    /// Staggered bursts of sparks.
     private func drawFireworks(_ context: GraphicsContext, _ size: CGSize, _ t: CGFloat) {
-        let bursts: [(CGFloat, CGFloat, CGFloat)] = [(0.25, 0.28, 0.1), (0.72, 0.22, 0.55), (0.5, 0.15, 1.0)]
+        let bursts: [(CGFloat, CGFloat, CGFloat)] = [(0.25, 0.28, 0.1), (0.72, 0.22, 0.55), (0.5, 0.15, 1.0), (0.3, 0.2, 2.0), (0.7, 0.3, 2.7)]
         for (index, burst) in bursts.enumerated() {
             let local = t - burst.2
             guard local > 0, local < 1.8 else { continue }
