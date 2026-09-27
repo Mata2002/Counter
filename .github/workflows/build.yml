@@ -118,6 +118,22 @@ jobs:
           sleep 4
           xcrun simctl io "$WUDID" screenshot shots/31-watch-counter.png
 
+      # The screenshots artifact can land on a storage host a reviewing session can't reach; small JPEG
+      # previews printed here can always be read back through the logs API.
+      - name: Print screenshot previews
+        if: always()
+        continue-on-error: true
+        run: |
+          mkdir -p previews
+          for f in shots/*.png; do
+            name=$(basename "$f" .png)
+            case "$name" in ${PREVIEW:-2[1-8]-*|01-*|02-*|05-*|06-*|31-*}) ;; *) continue ;; esac
+            sips -s format jpeg -s formatOptions 45 -Z 760 "$f" --out "previews/$name.jpg" >/dev/null
+            echo "IMGBEGIN $name"
+            base64 -i "previews/$name.jpg" | fold -w 2000
+            echo "IMGEND $name"
+          done
+
       - name: Upload screenshots
         if: always()
         uses: actions/upload-artifact@v4
