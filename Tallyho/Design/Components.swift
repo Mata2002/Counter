@@ -53,6 +53,8 @@ struct GlassIconButton: View {
     let systemImage: String
     var size: CGFloat = 44
     var tint: Color? = nil
+    /// On the counting stage: clear glass, so the icon keeps the ink picked for the color behind it.
+    var onStage = false
     let label: String
     let action: () -> Void
 
@@ -65,8 +67,16 @@ struct GlassIconButton: View {
                 .contentShape(Circle())
         }
         .buttonStyle(.plain)
-        .glassEffect(.regular.interactive(), in: Circle())
+        .glassEffect(onStage ? .clear.tint((tint ?? .primary).opacity(0.14)).interactive() : .regular.interactive(), in: Circle())
         .accessibilityLabel(label)
+    }
+}
+
+extension View {
+    /// Glass for controls floating on the counting stage. Regular glass lightens or darkens to match what's
+    /// behind it and can wash out the ink; clear glass with a hint of the ink keeps the contrast the theme audit checked.
+    func stageGlass<S: Shape>(_ ink: Color, in shape: S) -> some View {
+        glassEffect(.clear.tint(ink.opacity(0.14)).interactive(), in: shape)
     }
 }
 

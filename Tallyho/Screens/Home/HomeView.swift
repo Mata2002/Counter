@@ -17,6 +17,7 @@ struct HomeView: View {
     @State private var searching = false
     @State private var query = ""
     @State private var folderToDelete: TallyFolder?
+    @State private var drops = 0
 
     private var sort: TallySort { TallySort(rawValue: sortRaw) ?? .lastUsed }
     private var selectedTags: Set<String> {
@@ -84,17 +85,23 @@ struct HomeView: View {
 
             ForEach(loose) { tally in
                 TallyRow(tally: tally)
+                    .draggable(TallyDragItem(id: tally.id))
+                    .dropDestination(for: TallyDragItem.self) { items, _ in drop(items, into: nil) }
                     .homeRow(vertical: 2)
             }
 
             ForEach(visibleFolders) { folder in
                 let inside = tallies.filter { $0.folderID == folder.id }
-                FolderHeader(folder: folder, count: inside.count, onDelete: { folderToDelete = folder })
+                FolderHeader(folder: folder, count: inside.count, onDelete: { folderToDelete = folder }) { items in
+                    drop(items, into: folder.id)
+                }
                     .homeRow(vertical: 0)
                     .padding(.top, Space.m)
                 if !folder.collapsed {
                     ForEach(inside) { tally in
                         TallyRow(tally: tally)
+                            .draggable(TallyDragItem(id: tally.id))
+                            .dropDestination(for: TallyDragItem.self) { items, _ in drop(items, into: folder.id) }
                             .homeRow(vertical: 2)
                     }
                     if inside.isEmpty && !isFiltering {
@@ -118,9 +125,16 @@ struct HomeView: View {
                 }
             }
 
+            if !(store.homeTallies(showHidden: true).isEmpty && store.activeFolders.isEmpty) {
+                NewFolderDropRow()
+                    .homeRow(vertical: Space.xs)
+                    .padding(.top, Space.s)
+            }
+
             Color.clear.frame(height: 110)
                 .homeRow(vertical: 0)
         }
+        .sensoryFeedback(.success, trigger: drops)
         .listStyle(.plain)
         .scrollContentBackground(.hidden)
         .background(ThemeBackground())
@@ -144,6 +158,22 @@ struct HomeView: View {
         } message: {
             Text("Finished tallies from this folder stay in Finished either way.")
         }
+    }
+}
+
+extension HomeView {
+    /// Moves dropped tallies into a folder (or out of folders, for nil).
+    fileprivate func drop(_ items: [TallyDragItem], into folderID: UUID?) -> Bool {
+        let moving = items.map(\.id).filter { id in
+            guard let tally = store.tally(id) else { return false }
+            return tally.folderID != folderID
+        }
+        guard !moving.isEmpty else { return false }
+        withAnimation(Motion.standard) {
+            for id in moving { store.move(id, to: folderID) }
+        }
+        drops += 1
+        return true
     }
 }
 
@@ -392,6 +422,8 @@ private struct FolderHeader: View {
     let folder: TallyFolder
     let count: Int
     let onDelete: () -> Void
+    let onDrop: ([TallyDragItem]) -> Bool
+    @State private var targeted = false
 
     var body: some View {
         HStack(spacing: Space.m) {
@@ -431,7 +463,20 @@ private struct FolderHeader: View {
         }
         .frame(minHeight: 48)
         .overlay(alignment: .bottom) {
-            Rectangle().fill(theme.dividerColor).frame(height: 1).padding(.leading, 8)
+            Rectangle().fill(targeted ? theme.actionColor : theme.dividerColor)
+                .frame(height: targeted ? 2 : 1)
+                .padding(.leading, 8)
+        }
+        .background {
+            // A tally hovering over the folder: the folder lights up to say "drop here".
+            RoundedRectangle(cornerRadius: 12, style: .continuous)
+                .fill(theme.actionColor.opacity(targeted ? 0.12 : 0))
+        }
+        .scaleEffect(targeted ? 1.02 : 1)
+        .dropDestination(for: TallyDragItem.self) { items, _ in
+            onDrop(items)
+        } isTargeted: { hovering in
+            withAnimation(Motion.quick) { targeted = hovering }
         }
         .contentShape(Rectangle())
         .onTapGesture {

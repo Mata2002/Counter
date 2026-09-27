@@ -11,6 +11,8 @@ final class Router {
         case newTally(folderID: UUID?, template: Tally?)
         case editTally(Tally)
         case newFolder
+        /// A new folder that starts with this tally in it (a tally dropped on "New folder").
+        case newFolderHolding(UUID)
         case editFolder(TallyFolder)
 
         var id: String {
@@ -18,6 +20,7 @@ final class Router {
             case .newTally(let folderID, let template): return "new-\(folderID?.uuidString ?? "")-\(template?.id.uuidString ?? "")"
             case .editTally(let t): return "edit-\(t.id)"
             case .newFolder: return "new-folder"
+            case .newFolderHolding(let id): return "new-folder-\(id)"
             case .editFolder(let f): return "edit-folder-\(f.id)"
             }
         }
@@ -34,6 +37,8 @@ final class Router {
     var settingsPath: [SettingsPage] = []
     /// For screenshots: open the stage with the celebration already showing.
     var celebrateOnOpen = false
+    /// For screenshots: the Home Screen widgets, drawn in the app.
+    var showWidgetGallery = false
 
     func openTally(_ id: UUID) {
         editor = nil
@@ -79,6 +84,8 @@ final class Router {
         case "finished":
             showSettings = true
             settingsPath = [.finished]
+        case "widgets":
+            showWidgetGallery = true
         case "archive":
             showSettings = true
             settingsPath = [.archive]

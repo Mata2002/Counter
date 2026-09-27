@@ -24,7 +24,9 @@ final class PhoneSync: NSObject, WCSessionDelegate, @unchecked Sendable {
     }
 
     func send(_ snapshot: WatchSnapshot) {
+        // No paired watch with Tallyho on it: nothing to send (and nothing to log about).
         guard WCSession.isSupported(), WCSession.default.activationState == .activated,
+              WCSession.default.isPaired, WCSession.default.isWatchAppInstalled,
               let data = try? JSONEncoder().encode(snapshot) else { return }
         try? WCSession.default.updateApplicationContext([WatchSnapshot.contextKey: data])
         if WCSession.default.isReachable {

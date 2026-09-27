@@ -22,6 +22,7 @@ struct StageView: View {
     private var tally: Tally? { store.tally(tallyID) }
 
     var body: some View {
+        @Bindable var router = router
         Group {
             if let tally {
                 stage(tally)
@@ -30,6 +31,13 @@ struct StageView: View {
             }
         }
         .statusBarHidden()
+        // Tally settings and the "…" menu open the editor over the stage.
+        .sheet(item: $router.editor) { editor in
+            EditorSheet(editor: editor)
+                .environment(store)
+                .environment(router)
+                .themedSheet(theme)
+        }
         .onAppear {
             UIApplication.shared.isIdleTimerDisabled = keepAwake
             Haptics.prepare()
@@ -118,7 +126,7 @@ struct StageView: View {
         let bottomInk = tally.fillLevel > 0.1 ? theme.onTally(tally.colorIndex) : theme.onTallyBase(tally.colorIndex)
         return VStack {
             HStack(spacing: Space.m) {
-                GlassIconButton(systemImage: "chevron.down", tint: ink, label: "Close") { close() }
+                GlassIconButton(systemImage: "chevron.down", tint: ink, onStage: true, label: "Close") { close() }
                 Spacer(minLength: 0)
                 VStack(spacing: 2) {
                     Text(tally.displayName)
@@ -144,9 +152,9 @@ struct StageView: View {
                         .frame(width: 44, height: 44)
                         .contentShape(Circle())
                 }
-                .glassEffect(.regular.interactive(), in: Circle())
+                .stageGlass(ink, in: Circle())
                 .accessibilityLabel("More")
-                GlassIconButton(systemImage: "slider.horizontal.3", tint: ink, label: "Tally settings") {
+                GlassIconButton(systemImage: "slider.horizontal.3", tint: ink, onStage: true, label: "Tally settings") {
                     router.editor = .editTally(tally)
                 }
             }
@@ -168,7 +176,7 @@ struct StageView: View {
                         .contentShape(Capsule())
                 }
                 .buttonStyle(.plain)
-                .glassEffect(.regular.interactive(), in: Capsule())
+                .stageGlass(bottomInk, in: Capsule())
                 .accessibilityLabel(tally.direction == .up ? "Take back \(tally.undoStep)" : "Add back \(tally.undoStep)")
 
                 Spacer(minLength: 0)
@@ -186,7 +194,7 @@ struct StageView: View {
                             .contentShape(Capsule())
                     }
                     .buttonStyle(.plain)
-                    .glassEffect(.regular.interactive(), in: Capsule())
+                    .stageGlass(bottomInk, in: Capsule())
                     .transition(.scale.combined(with: .opacity))
                     Spacer(minLength: 0)
                 }
@@ -199,7 +207,7 @@ struct StageView: View {
                         .contentShape(Circle())
                 }
                 .buttonStyle(.plain)
-                .glassEffect(.regular.interactive(), in: Circle())
+                .stageGlass(bottomInk, in: Circle())
                 .accessibilityLabel("Reset")
             }
             .padding(.horizontal, Space.l)

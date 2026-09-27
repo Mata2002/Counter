@@ -66,7 +66,8 @@ final class TallyStore {
 
     /// Picks up changes made by widgets, controls or Shortcuts.
     func reload() {
-        let fresh = TallyFileStore.load()
+        // Waits for any save still being written, so the app never reads back its own stale file.
+        let fresh = Self.saveQueue.sync { TallyFileStore.load() }
         if fresh != data { data = fresh }
     }
 
@@ -75,10 +76,35 @@ final class TallyStore {
         persist()
     }
 
+    /// Saves happen off the main thread, in order, so fast tapping never waits on the disk.
+    private static let saveQueue = DispatchQueue(label: "MMT.Tallyho.save", qos: .userInitiated)
+    @ObservationIgnored private var pendingSideEffects: Task<Void, Never>?
+
     private func persist() {
-        TallyFileStore.save(data)
+        let snapshot = data
+        Self.saveQueue.async { TallyFileStore.save(snapshot) }
+        // Widgets and the watch only need the result once tapping pauses, not every tap.
+        pendingSideEffects?.cancel()
+        pendingSideEffects = Task { [weak self] in
+            try? await Task.sleep(for: .milliseconds(600))
+            guard !Task.isCancelled else { return }
+            self?.runSideEffects()
+        }
+    }
+
+    private func runSideEffects() {
+        pendingSideEffects = nil
         TallyFileStore.reloadWidgets()
         onChange?()
+    }
+
+    /// Finishes pending work now: the app is leaving the screen.
+    func flush() {
+        Self.saveQueue.sync {}
+        if pendingSideEffects != nil {
+            pendingSideEffects?.cancel()
+            runSideEffects()
+        }
     }
 
     private func mutate(_ change: (inout TallyData) -> Void) {

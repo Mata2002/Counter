@@ -2,6 +2,7 @@ import SwiftUI
 
 /// Routes an editor request to the right sheet.
 struct EditorSheet: View {
+    @Environment(TallyStore.self) private var store
     let editor: Router.Editor
 
     var body: some View {
@@ -12,6 +13,10 @@ struct EditorSheet: View {
             TallyEditor(original: tally, folderID: tally.folderID, template: nil)
         case .newFolder:
             FolderEditor(original: nil)
+        case .newFolderHolding(let tallyID):
+            FolderEditor(original: nil) { folder in
+                withAnimation(Motion.standard) { store.move(tallyID, to: folder.id) }
+            }
         case .editFolder(let folder):
             FolderEditor(original: folder)
         }

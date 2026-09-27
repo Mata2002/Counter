@@ -191,4 +191,195 @@ extension TallyTheme {
             talliesOnBase: [0x141414, 0x141414, 0x141414, 0x141414, 0x141414, 0x141414]
         ),
     ]
+
+    /// Each theme's other appearance (derived: same hues, lightness flipped).
+    static let alternates: [TallyTheme] = [
+        TallyTheme(
+            id: "riso", name: "Riso", kind: .everyday, scheme: .dark,
+            numeral: .rounded, particles: .tally, stage: .riso,
+            mood: "Risograph print: fluoro pink and blue ink on warm paper, slightly off-register.", signature: nil,
+            background: 0x1D1A13, surface: 0x2A251B, raised: 0x362F23, divider: 0x4D4432,
+            text: 0xEDECF4, text2: 0xA7A5C0, action: 0xE35388, onAction: 0x141414,
+            tallies: [0xF43274, 0x2D4CBD, 0xCEA80B, 0x078781, 0xF35614, 0x6639D2],
+            talliesBase: [0x6F2338, 0x232D54, 0x605010, 0x15433D, 0x6E3113, 0x39265C],
+            talliesOn: [0x141414, 0xFFFFFF, 0x141414, 0xFFFFFF, 0x141414, 0xFFFFFF],
+            talliesOnBase: [0xFFFFFF, 0xFFFFFF, 0xFFFFFF, 0xFFFFFF, 0xFFFFFF, 0xFFFFFF]
+        ),
+        TallyTheme(
+            id: "nightshift", name: "Night Shift", kind: .everyday, scheme: .light,
+            numeral: .default, particles: .tally, stage: .none,
+            mood: "Ink-black and acid lime. Built for counting in a dark room.", signature: nil,
+            background: 0xF2F3F6, surface: 0xFBFBFC, raised: 0xE6E8ED, divider: 0xD2D7DF,
+            text: 0x121C30, text2: 0x44577E, action: 0x597206, onAction: 0xFFFFFF,
+            tallies: [0xC6F432, 0x3BD7FF, 0xFF6B6B, 0xA78BFA, 0xFFC24B, 0xFF7AD9],
+            talliesBase: [0xDCF494, 0x97E5FB, 0xF9AFB1, 0xCDBFF8, 0xF9DBA1, 0xF9B7E8],
+            talliesOn: [0x141414, 0x141414, 0x141414, 0x141414, 0x141414, 0x141414],
+            talliesOnBase: [0x141414, 0x141414, 0x141414, 0x141414, 0x141414, 0x141414]
+        ),
+        TallyTheme(
+            id: "sorbet", name: "Sorbet", kind: .everyday, scheme: .dark,
+            numeral: .rounded, particles: .tally, stage: .none,
+            mood: "Peach, mint and lilac scoops on cream. Soft and sweet.", signature: nil,
+            background: 0x201710, surface: 0x2D2117, raised: 0x3B2B1E, divider: 0x543D2B,
+            text: 0xF3ECF0, text2: 0xC0A5B4, action: 0xD56189, onAction: 0x141414,
+            tallies: [0xF67F56, 0x3DA281, 0x8160E2, 0xE5AE23, 0xF64C74, 0x3E9BE6],
+            talliesBase: [0x713F2B, 0x2B4C3B, 0x453360, 0x6B5017, 0x712B36, 0x2B4961],
+            talliesOn: [0x141414, 0x141414, 0xFFFFFF, 0x141414, 0x141414, 0x141414],
+            talliesOnBase: [0xFFFFFF, 0xFFFFFF, 0xFFFFFF, 0xFFFFFF, 0xFFFFFF, 0xFFFFFF]
+        ),
+        TallyTheme(
+            id: "blueprint", name: "Blueprint", kind: .everyday, scheme: .light,
+            numeral: .mono, particles: .tally, stage: .grid,
+            mood: "Drafting-table blue with white linework and a monospaced counter.", signature: nil,
+            background: 0xEFF2F8, surface: 0xFAFBFD, raised: 0xE1E7F2, divider: 0xC9D4E8,
+            text: 0x121E30, text2: 0x445A7E, action: 0x0071A3, onAction: 0xFFFFFF,
+            tallies: [0x4FC3F7, 0xFFD166, 0xFF8A65, 0x7CE0B0, 0xC3A6FF, 0xF48FB1],
+            talliesBase: [0x9FDBF8, 0xF7E2AF, 0xF7BEAF, 0xB6E9D4, 0xD9CCFC, 0xF2C1D5],
+            talliesOn: [0x141414, 0x141414, 0x141414, 0x141414, 0x141414, 0x141414],
+            talliesOnBase: [0x141414, 0x141414, 0x141414, 0x141414, 0x141414, 0x141414]
+        ),
+        TallyTheme(
+            id: "chalk", name: "Chalk", kind: .everyday, scheme: .light,
+            numeral: .rounded, particles: .tally, stage: .none,
+            mood: "A slate chalkboard and dusty pastel chalk. Tally marks were made for this.", signature: nil,
+            background: 0xF2F5F4, surface: 0xFBFCFB, raised: 0xE7EBEA, divider: 0xD5DCDA,
+            text: 0x2E2A15, text2: 0x71683D, action: 0x7D6A08, onAction: 0xFFFFFF,
+            tallies: [0xF28B82, 0xF6E27A, 0x9AD1F5, 0xB7E4A8, 0xD7B8F3, 0xFFB870],
+            talliesBase: [0xF2C0BB, 0xF4ECB7, 0xC6E3F5, 0xD5EDCE, 0xE5D7F4, 0xF9D7B2],
+            talliesOn: [0x141414, 0x141414, 0x141414, 0x141414, 0x141414, 0x141414],
+            talliesOnBase: [0x141414, 0x141414, 0x141414, 0x141414, 0x141414, 0x141414]
+        ),
+        TallyTheme(
+            id: "espresso", name: "Espresso", kind: .everyday, scheme: .light,
+            numeral: .serif, particles: .tally, stage: .none,
+            mood: "Dark roast, steamed cream and caramel, with bookish serif numbers.", signature: nil,
+            background: 0xF5F3F2, surface: 0xFCFBFB, raised: 0xECE8E6, divider: 0xDED7D4,
+            text: 0x302412, text2: 0x7B6342, action: 0x995B16, onAction: 0xFFFFFF,
+            tallies: [0xE8A860, 0xEFD9B4, 0xE0788A, 0xA6C293, 0xE8845A, 0x8FB3D6],
+            talliesBase: [0xEFCEA9, 0xF2E6D3, 0xEBB6BE, 0xCEDBC3, 0xEFBCA6, 0xC2D3E4],
+            talliesOn: [0x141414, 0x141414, 0x141414, 0x141414, 0x141414, 0x141414],
+            talliesOnBase: [0x141414, 0x141414, 0x141414, 0x141414, 0x141414, 0x141414]
+        ),
+        TallyTheme(
+            id: "swiss", name: "Swiss", kind: .everyday, scheme: .dark,
+            numeral: .default, particles: .tally, stage: .none,
+            mood: "Grid, black, and one loud red. Posters from 1965.", signature: nil,
+            background: 0x191917, surface: 0x242421, raised: 0x2E2E2B, divider: 0x42423D,
+            text: 0xF0F0F0, text2: 0xB3B3B3, action: 0xEC5049, onAction: 0x141414,
+            tallies: [0xBE2720, 0xCCCCCC, 0xD5AD0B, 0x084D9A, 0x6E6E6E, 0xD55F0B],
+            talliesBase: [0x581E1A, 0x5D5D5C, 0x605112, 0x132D49, 0x393938, 0x603412],
+            talliesOn: [0xFFFFFF, 0x141414, 0x141414, 0xFFFFFF, 0xFFFFFF, 0x141414],
+            talliesOnBase: [0xFFFFFF, 0xFFFFFF, 0xFFFFFF, 0xFFFFFF, 0xFFFFFF, 0xFFFFFF]
+        ),
+        TallyTheme(
+            id: "citrus", name: "Citrus", kind: .everyday, scheme: .dark,
+            numeral: .rounded, particles: .tally, stage: .none,
+            mood: "Lemon, lime and grapefruit. Sunny and loud.", signature: nil,
+            background: 0x201D10, surface: 0x2D2917, raised: 0x3B351E, divider: 0x544C2B,
+            text: 0xF4F2EC, text2: 0xC0B9A5, action: 0xF55108, onAction: 0x141414,
+            tallies: [0xF3C324, 0x7BB139, 0xF37A14, 0xF53F3C, 0x30A282, 0x2D8651],
+            talliesBase: [0x705C18, 0x435520, 0x704012, 0x712A21, 0x26503B, 0x254529],
+            talliesOn: [0x141414, 0x141414, 0x141414, 0x141414, 0x141414, 0xFFFFFF],
+            talliesOnBase: [0xFFFFFF, 0xFFFFFF, 0xFFFFFF, 0xFFFFFF, 0xFFFFFF, 0xFFFFFF]
+        ),
+        TallyTheme(
+            id: "newyear", name: "New Year", kind: .holiday, scheme: .light,
+            numeral: .serif, particles: .fireworks, stage: .none,
+            mood: "Midnight, champagne and gold.", signature: "Finishing a tally sets off fireworks.",
+            background: 0xF1F2F6, surface: 0xFAFBFC, raised: 0xE4E6EF, divider: 0xCFD2E2,
+            text: 0x302812, text2: 0x71623D, action: 0x806412, onAction: 0xFFFFFF,
+            tallies: [0xE9C660, 0xC9CED8, 0x8C9BFF, 0xF2A6C4, 0x7FD9C4, 0xF08A5D],
+            talliesBase: [0xEDDCAB, 0xDDE0E7, 0xBFC7FB, 0xF2CCDD, 0xB8E6DD, 0xF1BEAA],
+            talliesOn: [0x141414, 0x141414, 0x141414, 0x141414, 0x141414, 0x141414],
+            talliesOnBase: [0x141414, 0x141414, 0x141414, 0x141414, 0x141414, 0x141414]
+        ),
+        TallyTheme(
+            id: "valentine", name: "Valentine’s", kind: .holiday, scheme: .dark,
+            numeral: .serif, particles: .hearts, stage: .none,
+            mood: "Rose, blush and wine.", signature: "Finishing a tally rains hearts.",
+            background: 0x201012, surface: 0x2D1719, raised: 0x3B1E20, divider: 0x542B2E,
+            text: 0xF4ECED, text2: 0xC0A5AA, action: 0xE0506E, onAction: 0x141414,
+            tallies: [0xD32A44, 0xF76781, 0x781E2F, 0xE79542, 0xB44989, 0x6A45C7],
+            talliesBase: [0x641A25, 0x72313C, 0x41151D, 0x6C4324, 0x58263F, 0x3C2457],
+            talliesOn: [0xFFFFFF, 0x141414, 0xFFFFFF, 0x141414, 0xFFFFFF, 0xFFFFFF],
+            talliesOnBase: [0xFFFFFF, 0xFFFFFF, 0xFFFFFF, 0xFFFFFF, 0xFFFFFF, 0xFFFFFF]
+        ),
+        TallyTheme(
+            id: "stpatricks", name: "St. Patrick’s", kind: .holiday, scheme: .dark,
+            numeral: .rounded, particles: .clovers, stage: .none,
+            mood: "Shamrock green and a little gold.", signature: "Finishing a tally showers clovers.",
+            background: 0x171D13, surface: 0x20291C, raised: 0x2A3524, divider: 0x3C4C33,
+            text: 0xECF4EF, text2: 0xA5C0AE, action: 0x1F9F52, onAction: 0x141414,
+            tallies: [0x208543, 0x6DA73E, 0xD1A82A, 0x105A33, 0xE37725, 0x468C89],
+            talliesBase: [0x1A4525, 0x385123, 0x5E521C, 0x14341F, 0x653F1A, 0x294740],
+            talliesOn: [0xFFFFFF, 0x141414, 0x141414, 0xFFFFFF, 0x141414, 0x141414],
+            talliesOnBase: [0xFFFFFF, 0xFFFFFF, 0xFFFFFF, 0xFFFFFF, 0xFFFFFF, 0xFFFFFF]
+        ),
+        TallyTheme(
+            id: "easter", name: "Easter", kind: .holiday, scheme: .dark,
+            numeral: .rounded, particles: .eggs, stage: .none,
+            mood: "Dyed-egg pastels on a spring morning.", signature: "Finishing a tally tumbles painted eggs.",
+            background: 0x181020, surface: 0x22172D, raised: 0x2D1E3B, divider: 0x402B54,
+            text: 0xEEECF4, text2: 0xADA5C0, action: 0x8D72D3, onAction: 0x141414,
+            tallies: [0x8D68EA, 0xF87493, 0x4FB895, 0xEBB52E, 0x50A2E6, 0xF5804A],
+            talliesBase: [0x44316D, 0x6D364C, 0x2D504C, 0x684F25, 0x2D476B, 0x6C3B30],
+            talliesOn: [0x181020, 0x181020, 0x181020, 0x181020, 0x181020, 0x181020],
+            talliesOnBase: [0xFFFFFF, 0xFFFFFF, 0xFFFFFF, 0xFFFFFF, 0xFFFFFF, 0xFFFFFF]
+        ),
+        TallyTheme(
+            id: "july4", name: "Fourth of July", kind: .holiday, scheme: .light,
+            numeral: .default, particles: .stars, stage: .none,
+            mood: "Navy night, red, white and fireworks.", signature: "Finishing a tally bursts stars and fireworks.",
+            background: 0xEFF2F8, surface: 0xFAFBFD, raised: 0xE1E6F2, divider: 0xCAD2E8,
+            text: 0x121B30, text2: 0x44547E, action: 0xD70015, onAction: 0xFFFFFF,
+            tallies: [0xFF4D5E, 0x314472, 0x4F8BFF, 0xFFD166, 0x7AD7F0, 0xFF8FB1],
+            talliesBase: [0xF7A0AB, 0x909BB5, 0x9FBFFC, 0xF7E2AF, 0xB5E5F4, 0xF7C1D5],
+            talliesOn: [0x141414, 0xFFFFFF, 0x141414, 0x141414, 0x141414, 0x141414],
+            talliesOnBase: [0x141414, 0x141414, 0x141414, 0x141414, 0x141414, 0x141414]
+        ),
+        TallyTheme(
+            id: "halloween", name: "Halloween", kind: .holiday, scheme: .light,
+            numeral: .rounded, particles: .bats, stage: .none,
+            mood: "Pumpkin orange, potion purple and a full moon.", signature: "Finishing a tally sends up a flurry of bats.",
+            background: 0xF4F2F5, surface: 0xFBFBFC, raised: 0xEAE6ED, divider: 0xDAD3DF,
+            text: 0x2C132F, text2: 0x78447E, action: 0xA94C00, onAction: 0xFFFFFF,
+            tallies: [0xFF8A2A, 0xA868D6, 0xA3CF4A, 0xF4E9C9, 0xFF5A5F, 0x6FD3C8],
+            talliesBase: [0xFABE90, 0xCEADE6, 0xCCE1A0, 0xF4EEDF, 0xFAA6AA, 0xB2E3DF],
+            talliesOn: [0x141414, 0x141414, 0x141414, 0x141414, 0x141414, 0x141414],
+            talliesOnBase: [0x141414, 0x141414, 0x141414, 0x141414, 0x141414, 0x141414]
+        ),
+        TallyTheme(
+            id: "thanksgiving", name: "Thanksgiving", kind: .holiday, scheme: .dark,
+            numeral: .serif, particles: .leaves, stage: .none,
+            mood: "Harvest orange, cranberry and golden wheat.", signature: "Finishing a tally drifts autumn leaves.",
+            background: 0x201910, surface: 0x2D2417, raised: 0x3B2F1E, divider: 0x54432B,
+            text: 0xF4EFEC, text2: 0xC0B1A5, action: 0xE75915, onAction: 0x141414,
+            tallies: [0xC66B28, 0x9C322F, 0xC79332, 0x697737, 0x785038, 0xB4653E],
+            talliesBase: [0x5F3819, 0x4F231C, 0x5F471D, 0x3C3D1F, 0x412E1F, 0x583621],
+            talliesOn: [0x141414, 0xFFFFFF, 0x141414, 0xFFFFFF, 0xFFFFFF, 0xFFFFFF],
+            talliesOnBase: [0xFFFFFF, 0xFFFFFF, 0xFFFFFF, 0xFFFFFF, 0xFFFFFF, 0xFFFFFF]
+        ),
+        TallyTheme(
+            id: "christmas", name: "Christmas", kind: .holiday, scheme: .light,
+            numeral: .serif, particles: .snow, stage: .none,
+            mood: "Pine green, cranberry and candlelight.", signature: "Finishing a tally starts a snowfall.",
+            background: 0xF1F6F4, surface: 0xFAFCFB, raised: 0xE5EEEA, divider: 0xD1E0D9,
+            text: 0x302612, text2: 0x7B6642, action: 0xD81100, onAction: 0xFFFFFF,
+            tallies: [0xE84A3F, 0x3FB36F, 0xF2D27A, 0x725B31, 0x7FB8E0, 0xD98AC0],
+            talliesBase: [0xEDA09A, 0x98D5B2, 0xF2E4B7, 0xB2A993, 0xB8D7EA, 0xE5C0DA],
+            talliesOn: [0x141414, 0x141414, 0x141414, 0xFFFFFF, 0x141414, 0x141414],
+            talliesOnBase: [0x141414, 0x141414, 0x141414, 0x141414, 0x141414, 0x141414]
+        ),
+        TallyTheme(
+            id: "nowruz", name: "Nowruz", kind: .holiday, scheme: .dark,
+            numeral: .rounded, particles: .spring, stage: .none,
+            mood: "Sabzeh green, turquoise, goldfish orange and hyacinth.", signature: "Finishing a tally releases goldfish and blossoms.",
+            background: 0x141D15, surface: 0x1C291E, raised: 0x243527, divider: 0x344B37,
+            text: 0xECF4EF, text2: 0xA5C0B0, action: 0x10998E, onAction: 0x141414,
+            tallies: [0x3C8B47, 0x218D87, 0xDF7B19, 0x784FB5, 0xD2A835, 0xD24868],
+            talliesBase: [0x234728, 0x194840, 0x614117, 0x3A3052, 0x5C5221, 0x5C2D35],
+            talliesOn: [0x141414, 0x141414, 0x141414, 0xFFFFFF, 0x141414, 0xFFFFFF],
+            talliesOnBase: [0xFFFFFF, 0xFFFFFF, 0xFFFFFF, 0xFFFFFF, 0xFFFFFF, 0xFFFFFF]
+        ),
+    ]
 }

@@ -84,6 +84,14 @@ jobs:
           WAIT=3 shot 15-celebrate-christmas -theme christmas -screen celebrate
           shot 16-new-tally-nowruz -theme nowruz -screen new
           shot 17-archive-valentine -theme valentine -screen archive
+          shot 21-widgets-riso -theme riso -screen widgets
+          shot 22-widgets-nightshift -theme nightshift -screen widgets
+          shot 23-home-nightshift-light -theme nightshift -appearance light
+          shot 24-stage-riso-dark -theme riso -appearance dark -screen stage
+          shot 25-themes-riso-dark -theme riso -appearance dark -screen themes
+          shot 26-home-swiss-dark -theme swiss -appearance dark
+          shot 27-widgets-espresso-light -theme espresso -appearance light -screen widgets
+          shot 28-settings-sorbet-dark -theme sorbet -appearance dark -screen settings
           xcrun simctl ui "$UDID" appearance dark
           shot 18-home-espresso-dark -theme espresso
           xcrun simctl ui "$UDID" content_size accessibility-extra-large

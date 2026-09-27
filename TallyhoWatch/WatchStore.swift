@@ -14,7 +14,8 @@ final class WatchStore {
     private(set) var themeID: String = TallyTheme.fallback.id
     private(set) var lastSync: Date?
 
-    var theme: TallyTheme { TallyTheme.named(themeID) ?? .fallback }
+    /// The watch is always dark, so it wears the dark version of your theme.
+    var theme: TallyTheme { (TallyTheme.named(themeID) ?? .fallback).resolved(.dark) }
 
     private let storageKey = "watch.snapshot"
     @ObservationIgnored private let session = WatchSession()

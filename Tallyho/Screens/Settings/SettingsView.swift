@@ -54,6 +54,11 @@ struct SettingsView: View {
                     }
                     .padding(.vertical, 4)
                 }
+                VStack(alignment: .leading, spacing: Space.s) {
+                    Text("Appearance").foregroundStyle(theme.textColor)
+                    AppearancePicker()
+                }
+                .padding(.vertical, 4)
             }
             .themedRow(theme)
 

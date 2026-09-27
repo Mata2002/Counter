@@ -1,5 +1,5 @@
 // Tallyho themes — source of truth. Run: node design/themes/build.js
-// Each theme has ONE fixed appearance (light or dark) so it can have a strong personality.
+// Each theme is authored in its home appearance (light or dark); build.js derives the other one.
 // Roles:
 //   bg, surface, raised, divider      neutral family (4 steps, tinted toward the theme hue)
 //   text, text2                       primary / secondary text

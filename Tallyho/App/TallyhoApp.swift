@@ -19,13 +19,10 @@ struct TallyhoApp: App {
 
     var body: some Scene {
         WindowGroup {
-            RootView()
+            ThemedRoot()
                 .environment(store)
                 .environment(themes)
                 .environment(router)
-                .environment(\.theme, themes.active)
-                .preferredColorScheme(themes.active.colorScheme)
-                .tint(themes.active.actionColor)
                 .onOpenURL { router.open($0) }
         }
         .onChange(of: scenePhase) { _, phase in
@@ -44,10 +41,26 @@ struct TallyhoApp: App {
                 Haptics.prepare()
             case .background:
                 wasInBackground = true
+                store.flush()
             default:
                 break
             }
         }
+    }
+}
+
+/// Picks the light or dark version of the active theme and applies it to the whole app.
+private struct ThemedRoot: View {
+    @Environment(ThemeManager.self) private var themes
+    /// With the appearance set to follow the device, nothing overrides this, so it is the device's setting.
+    @Environment(\.colorScheme) private var deviceScheme
+
+    var body: some View {
+        let theme = themes.theme(forDevice: deviceScheme)
+        RootView()
+            .environment(\.theme, theme)
+            .preferredColorScheme(themes.appearance.colorScheme)
+            .tint(theme.actionColor)
     }
 }
 
@@ -119,7 +132,12 @@ enum LaunchOptions {
         TallyFileStore.save(args.contains("-ghost") ? DemoData.withEmptyWaterFolder() : DemoData.make())
         TallyStore.shared.reload()
         UserDefaults.standard.set(args.contains("-split"), forKey: AppSettings.splitPanes)
-        if let theme = value(after: "-theme") { ThemeManager.shared.force(theme) }
+        if let theme = value(after: "-theme") {
+            ThemeManager.shared.force(theme)
+            // Screenshots show a theme in its home appearance unless `-appearance light|dark` says otherwise.
+            let home: ThemeAppearance = ThemeManager.shared.active.scheme == .dark ? .dark : .light
+            ThemeManager.shared.appearance = value(after: "-appearance").flatMap(ThemeAppearance.init) ?? home
+        }
         if let screen = value(after: "-screen") { Router.shared.openForScreenshot(screen) }
     }
 }

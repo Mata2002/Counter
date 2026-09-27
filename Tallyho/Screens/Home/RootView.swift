@@ -25,7 +25,11 @@ struct RootView: View {
                 .environment(\.theme, theme)
                 .preferredColorScheme(theme.colorScheme)
         }
-        .sheet(item: $router.editor) { editor in
+        // While the counting stage covers the screen it presents the editor itself (a sheet from here would be hidden under it).
+        .sheet(item: Binding(
+            get: { router.stageTallyID == nil ? router.editor : nil },
+            set: { router.editor = $0 }
+        )) { editor in
             EditorSheet(editor: editor)
                 .environment(store)
                 .environment(router)
@@ -40,6 +44,9 @@ struct RootView: View {
         }
         .overlay(alignment: .bottom) {
             UndoToast()
+        }
+        .overlay {
+            if router.showWidgetGallery { WidgetGallery() }
         }
     }
 }

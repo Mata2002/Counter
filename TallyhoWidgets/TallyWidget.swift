@@ -16,16 +16,19 @@ struct TallyEntry: TimelineEntry {
     let date: Date
     let tally: Tally?
     let theme: TallyTheme
+    let appearance: ThemeAppearance
 }
 
 struct TallyProvider: AppIntentTimelineProvider {
     func placeholder(in context: Context) -> TallyEntry {
-        TallyEntry(date: Date(), tally: Self.sample, theme: currentTheme())
+        TallyEntry(date: Date(), tally: Self.sample, theme: currentTheme(), appearance: currentAppearance())
     }
 
     func snapshot(for configuration: TallyWidgetConfiguration, in context: Context) async -> TallyEntry {
         let entry = makeEntry(for: configuration)
-        return entry.tally == nil && context.isPreview ? TallyEntry(date: Date(), tally: Self.sample, theme: entry.theme) : entry
+        return entry.tally == nil && context.isPreview
+            ? TallyEntry(date: Date(), tally: Self.sample, theme: entry.theme, appearance: entry.appearance)
+            : entry
     }
 
     func timeline(for configuration: TallyWidgetConfiguration, in context: Context) async -> Timeline<TallyEntry> {
@@ -39,11 +42,15 @@ struct TallyProvider: AppIntentTimelineProvider {
         let fallback = data.tallies
             .filter { $0.isActive && !$0.hidden }
             .max { ($0.lastUsedAt ?? $0.createdAt) < ($1.lastUsedAt ?? $1.createdAt) }
-        return TallyEntry(date: Date(), tally: chosen ?? fallback, theme: currentTheme())
+        return TallyEntry(date: Date(), tally: chosen ?? fallback, theme: currentTheme(), appearance: currentAppearance())
     }
 
     private func currentTheme() -> TallyTheme {
         TallyTheme.named(TallyFileStore.sharedDefaults.string(forKey: "theme.active")) ?? .fallback
+    }
+
+    private func currentAppearance() -> ThemeAppearance {
+        ThemeAppearance(rawValue: TallyFileStore.sharedDefaults.string(forKey: ThemeAppearance.storageKey) ?? "") ?? .system
     }
 
     static var sample: Tally {
@@ -61,7 +68,6 @@ struct TallyWidget: Widget {
     var body: some WidgetConfiguration {
         AppIntentConfiguration(kind: kind, intent: TallyWidgetConfiguration.self, provider: TallyProvider()) { entry in
             TallyWidgetView(entry: entry)
-                .environment(\.theme, entry.theme)
         }
         .configurationDisplayName("Tally")
         .description("Count a tally without opening the app.")
@@ -72,156 +78,34 @@ struct TallyWidget: Widget {
 
 struct TallyWidgetView: View {
     @Environment(\.widgetFamily) private var family
-    @Environment(\.theme) private var theme
+    @Environment(\.colorScheme) private var deviceScheme
     let entry: TallyEntry
 
     var body: some View {
+        // The container background doesn't inherit environment values, so it gets the theme passed in directly.
+        let theme = entry.theme.resolved(entry.appearance.colorScheme ?? deviceScheme)
         Group {
             if let tally = entry.tally {
                 switch family {
-                case .systemSmall: SmallTally(tally: tally)
-                case .systemMedium: MediumTally(tally: tally)
+                case .systemSmall: WidgetSmallTally(tally: tally)
+                case .systemMedium: WidgetMediumTally(tally: tally)
                 case .accessoryCircular: CircularTally(tally: tally)
                 case .accessoryRectangular: RectangularTally(tally: tally)
                 case .accessoryInline: Text("\(tally.emoji) \(tally.displayName) \(tally.value)\(tally.target.map { "/\($0)" } ?? "")")
-                default: SmallTally(tally: tally)
+                default: WidgetSmallTally(tally: tally)
                 }
             } else {
                 EmptyTally()
             }
         }
+        .environment(\.theme, theme)
         .widgetURL(entry.tally.map { URL(string: "tallyho://tally/\($0.id.uuidString)")! } ?? URL(string: "tallyho://new"))
         .containerBackground(for: .widget) {
             if let tally = entry.tally, family == .systemSmall || family == .systemMedium {
-                StaticStage(tally: tally)
+                WidgetStage(tally: tally, theme: theme)
             } else {
                 theme.backgroundColor
             }
-        }
-    }
-}
-
-/// The stage, frozen: the unfilled color and the liquid at its current level.
-private struct StaticStage: View {
-    @Environment(\.theme) private var theme
-    let tally: Tally
-    var body: some View {
-        ZStack {
-            theme.tallyBase(tally.colorIndex)
-            LiquidFill(level: tally.fillLevel, phase: 0, amplitude: 0)
-                .fill(theme.tally(tally.colorIndex))
-        }
-    }
-}
-
-/// Text drawn in the right ink on both sides of the liquid line.
-private struct InkText<Content: View>: View {
-    @Environment(\.theme) private var theme
-    let tally: Tally
-    @ViewBuilder let content: (Color) -> Content
-
-    var body: some View {
-        ZStack {
-            content(theme.onTallyBase(tally.colorIndex))
-            content(theme.onTally(tally.colorIndex))
-                .mask(LiquidFill(level: tally.fillLevel, phase: 0, amplitude: 0).ignoresSafeArea())
-        }
-    }
-}
-
-private struct CountButton: View {
-    @Environment(\.theme) private var theme
-    let tally: Tally
-    let reverse: Bool
-    let size: CGFloat
-
-    var body: some View {
-        let isPlus = (tally.direction == .up) != reverse
-        Button(intent: CountTallyIntent(tallyID: tally.id, reverse: reverse)) {
-            Image(systemName: isPlus ? "plus" : "minus")
-                .font(.system(size: size * 0.42, weight: .heavy))
-                .foregroundStyle(reverse ? theme.textColor : theme.onActionColor)
-                .frame(width: size, height: size)
-                .background(reverse ? theme.surfaceColor : theme.actionColor, in: Circle())
-        }
-        .buttonStyle(.plain)
-        .accessibilityLabel(isPlus ? "Add \(reverse ? tally.undoStep : tally.step)" : "Take away \(reverse ? tally.undoStep : tally.step)")
-    }
-}
-
-private struct SmallTally: View {
-    @Environment(\.theme) private var theme
-    let tally: Tally
-
-    var body: some View {
-        ZStack(alignment: .bottom) {
-            InkText(tally: tally) { ink in
-                VStack(alignment: .leading, spacing: 0) {
-                    Text("\(tally.emoji) \(tally.displayName)")
-                        .font(.caption.weight(.bold))
-                        .lineLimit(1)
-                    Spacer(minLength: 0)
-                    Text("\(tally.value)")
-                        .font(theme.numeralFont(size: 46))
-                        .minimumScaleFactor(0.4)
-                        .lineLimit(1)
-                        .contentTransition(.numericText(value: Double(tally.value)))
-                    Text(tally.goalText ?? tally.statusText)
-                        .font(.caption2.weight(.semibold))
-                        .opacity(0.85)
-                    Spacer(minLength: 46)
-                }
-                .foregroundStyle(ink)
-                .frame(maxWidth: .infinity, maxHeight: .infinity, alignment: .leading)
-                .padding(14)
-            }
-            HStack {
-                CountButton(tally: tally, reverse: true, size: 34)
-                Spacer()
-                CountButton(tally: tally, reverse: false, size: 44)
-            }
-            .padding(10)
-        }
-    }
-}
-
-private struct MediumTally: View {
-    @Environment(\.theme) private var theme
-    let tally: Tally
-
-    var body: some View {
-        HStack(spacing: 0) {
-            InkText(tally: tally) { ink in
-                VStack(alignment: .leading, spacing: 4) {
-                    Text("\(tally.emoji) \(tally.displayName)")
-                        .font(.subheadline.weight(.bold))
-                        .lineLimit(1)
-                    Spacer(minLength: 0)
-                    HStack(alignment: .firstTextBaseline, spacing: 6) {
-                        Text("\(tally.value)")
-                            .font(theme.numeralFont(size: 58))
-                            .minimumScaleFactor(0.4)
-                            .lineLimit(1)
-                            .contentTransition(.numericText(value: Double(tally.value)))
-                        if let target = tally.target {
-                            Text("/ \(target)")
-                                .font(theme.numeralFont(.title3, weight: .bold))
-                                .opacity(0.8)
-                        }
-                    }
-                    Text(tally.statusText)
-                        .font(.caption.weight(.semibold))
-                        .opacity(0.9)
-                }
-                .foregroundStyle(ink)
-                .frame(maxWidth: .infinity, maxHeight: .infinity, alignment: .leading)
-                .padding(16)
-            }
-            VStack(spacing: 10) {
-                CountButton(tally: tally, reverse: false, size: 64)
-                CountButton(tally: tally, reverse: true, size: 40)
-            }
-            .padding(.trailing, 16)
         }
     }
 }
@@ -255,7 +139,7 @@ private struct RectangularTally: View {
             Text("\(tally.emoji) \(tally.displayName)")
                 .font(.headline)
                 .lineLimit(1)
-            Text("\(tally.value)\(tally.target.map { " of \($0)" } ?? "") · \(tally.statusText)")
+            Text("\(tally.value)\(tally.goalText.map { " \($0)" } ?? "") · \(tally.statusText)")
                 .font(.caption)
                 .lineLimit(1)
             if tally.hasGoal {

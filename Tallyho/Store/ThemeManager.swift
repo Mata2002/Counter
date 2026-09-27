@@ -46,6 +46,14 @@ final class ThemeManager {
     var shuffleMode: ShuffleMode {
         didSet { defaults.set(shuffleMode.rawValue, forKey: Key.shuffle) }
     }
+    /// Light, dark, or follow the device. Every theme has both.
+    var appearance: ThemeAppearance {
+        didSet {
+            defaults.set(appearance.rawValue, forKey: ThemeAppearance.storageKey)
+            TallyFileStore.sharedDefaults.set(appearance.rawValue, forKey: ThemeAppearance.storageKey)
+            TallyFileStore.reloadWidgets()
+        }
+    }
     var holidaysEnabled: Bool {
         didSet { defaults.set(holidaysEnabled, forKey: Key.holidays); refresh() }
     }
@@ -62,10 +70,16 @@ final class ThemeManager {
         activeHolidayID = nil
         favorites = Set(d.stringArray(forKey: Key.favorites) ?? [])
         shuffleMode = ShuffleMode(rawValue: d.string(forKey: Key.shuffle) ?? "") ?? .off
+        appearance = ThemeAppearance(rawValue: d.string(forKey: ThemeAppearance.storageKey) ?? "") ?? .system
         holidaysEnabled = d.object(forKey: Key.holidays) as? Bool ?? true
         disabledHolidays = Set(d.stringArray(forKey: Key.disabledHolidays) ?? [])
         dismissedHoliday = d.string(forKey: Key.dismissedHoliday) ?? ""
         refresh()
+    }
+
+    /// The active theme in the right appearance, given what the device is set to.
+    func theme(forDevice deviceScheme: ColorScheme) -> TallyTheme {
+        active.resolved(appearance.colorScheme ?? deviceScheme)
     }
 
     /// For screenshots and previews.
@@ -143,8 +157,10 @@ final class ThemeManager {
 
     private func publish() {
         let shared = TallyFileStore.sharedDefaults
-        if shared.string(forKey: Key.active) != active.id {
+        if shared.string(forKey: Key.active) != active.id
+            || shared.string(forKey: ThemeAppearance.storageKey) != appearance.rawValue {
             shared.set(active.id, forKey: Key.active)
+            shared.set(appearance.rawValue, forKey: ThemeAppearance.storageKey)
             TallyFileStore.reloadWidgets()
         }
         onChange?()

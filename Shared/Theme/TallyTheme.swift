@@ -38,7 +38,7 @@ struct TallyTheme: Identifiable, Equatable, Sendable {
     /// Ink for text on each tally's unfilled stage color.
     let talliesOnBase: [UInt32]
 
-    static func == (lhs: TallyTheme, rhs: TallyTheme) -> Bool { lhs.id == rhs.id }
+    static func == (lhs: TallyTheme, rhs: TallyTheme) -> Bool { lhs.id == rhs.id && lhs.scheme == rhs.scheme }
 
     static let tallyColorCount = 6
     static var fallback: TallyTheme { all[0] }
@@ -50,6 +50,38 @@ struct TallyTheme: Identifiable, Equatable, Sendable {
     }
 
     var colorScheme: ColorScheme { scheme == .dark ? .dark : .light }
+
+    /// This theme in the given appearance. Every theme has a light and a dark version.
+    func resolved(_ appearance: ColorScheme) -> TallyTheme {
+        let wanted: Scheme = appearance == .dark ? .dark : .light
+        if scheme == wanted { return self }
+        return (Self.all + Self.alternates).first { $0.id == id && $0.scheme == wanted } ?? self
+    }
+}
+
+/// Light, dark, or whatever the device is set to. Stored outside the tally data, in the shared app group
+/// so widgets match.
+enum ThemeAppearance: String, CaseIterable, Identifiable, Sendable {
+    case system, light, dark
+    var id: String { rawValue }
+    static let storageKey = "theme.appearance"
+
+    var title: String {
+        switch self {
+        case .system: return "Device"
+        case .light: return "Light"
+        case .dark: return "Dark"
+        }
+    }
+
+    /// Nil means follow the device.
+    var colorScheme: ColorScheme? {
+        switch self {
+        case .system: return nil
+        case .light: return .light
+        case .dark: return .dark
+        }
+    }
 }
 
 extension Color {

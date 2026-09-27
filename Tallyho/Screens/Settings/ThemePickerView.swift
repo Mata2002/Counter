@@ -38,6 +38,16 @@ struct ThemePickerView: View {
                 }
 
                 VStack(alignment: .leading, spacing: Space.m) {
+                    Text("Appearance").foregroundStyle(theme.textColor)
+                    AppearancePicker()
+                    Text("Every theme has a light and a dark version.")
+                        .font(.footnote)
+                        .foregroundStyle(theme.text2Color)
+                }
+                .padding(Space.l)
+                .background(theme.surfaceColor, in: RoundedRectangle(cornerRadius: 20, style: .continuous))
+
+                VStack(alignment: .leading, spacing: Space.m) {
                     Text("Shuffle automatically").foregroundStyle(theme.textColor)
                     Picker("Shuffle automatically", selection: Binding(get: { themes.shuffleMode }, set: { themes.shuffleMode = $0 })) {
                         ForEach(ThemeManager.ShuffleMode.allCases) { Text($0.title).tag($0) }
@@ -134,22 +144,24 @@ private struct ThemeTile: View {
     var body: some View {
         let selected = themes.active.id == tileTheme.id
         let favorite = themes.favorites.contains(tileTheme.id)
+        // Tiles preview each theme in the appearance you're using now.
+        let shown = tileTheme.resolved(theme.colorScheme)
         VStack(alignment: .leading, spacing: Space.s) {
             ZStack(alignment: .bottomLeading) {
                 LiquidStage(colorIndex: 0, level: 0.62, amplitude: 4, texture: true) { ink in
                     Text("42")
-                        .font(tileTheme.numeralFont(size: 54))
+                        .font(shown.numeralFont(size: 54))
                         .foregroundStyle(ink)
                         .frame(maxWidth: .infinity, maxHeight: .infinity)
                 }
-                .environment(\.theme, tileTheme)
+                .environment(\.theme, shown)
                 HStack(spacing: 4) {
                     ForEach(1..<TallyTheme.tallyColorCount, id: \.self) { i in
-                        Circle().fill(tileTheme.tally(i)).frame(width: 10, height: 10)
+                        Circle().fill(shown.tally(i)).frame(width: 10, height: 10)
                     }
                 }
                 .padding(6)
-                .background(tileTheme.backgroundColor, in: Capsule())
+                .background(shown.backgroundColor, in: Capsule())
                 .padding(8)
             }
             .frame(height: 118)
@@ -160,11 +172,13 @@ private struct ThemeTile: View {
                         .font(.subheadline.weight(.semibold))
                         .foregroundStyle(theme.textColor)
                         .lineLimit(1)
-                    Text(detail ?? (tileTheme.scheme == .dark ? "Dark" : "Light"))
-                        .font(.caption)
-                        .foregroundStyle(theme.text2Color)
-                        .lineLimit(1)
-                        .minimumScaleFactor(0.8)
+                    if let detail {
+                        Text(detail)
+                            .font(.caption)
+                            .foregroundStyle(theme.text2Color)
+                            .lineLimit(1)
+                            .minimumScaleFactor(0.8)
+                    }
                 }
                 Spacer(minLength: 0)
                 Button { themes.toggleFavorite(tileTheme.id) } label: {
@@ -192,5 +206,20 @@ private struct ThemeTile: View {
         .accessibilityLabel("\(tileTheme.name) theme\(selected ? ", selected" : "")")
         .accessibilityAddTraits(.isButton)
         .accessibilityAction { ThemeCrossfade.perform { themes.select(tileTheme.id) } }
+    }
+}
+
+/// Device, Light or Dark, switched with the same crossfade as a theme change.
+struct AppearancePicker: View {
+    @Environment(ThemeManager.self) private var themes
+
+    var body: some View {
+        Picker("Appearance", selection: Binding(
+            get: { themes.appearance },
+            set: { value in ThemeCrossfade.perform { themes.appearance = value } }
+        )) {
+            ForEach(ThemeAppearance.allCases) { Text($0.title).tag($0) }
+        }
+        .pickerStyle(.segmented)
     }
 }
