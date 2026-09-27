@@ -164,6 +164,11 @@ extension Tally {
         return "\(start) → \(target)"
     }
 
+    /// "of 70" when counting up, "to 0" when counting down. Nil without a goal.
+    var goalText: String? {
+        target.map { direction == .up ? "of \($0)" : "to \($0)" }
+    }
+
     /// "38 to go", "Goal reached", or "32 counted".
     var statusText: String {
         if let remaining {

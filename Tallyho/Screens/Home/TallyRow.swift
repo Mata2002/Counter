@@ -7,58 +7,57 @@ struct TallyRow: View {
     @Environment(Router.self) private var router
     @Environment(\.theme) private var theme
     @AppStorage(AppSettings.showMarks) private var showMarks = true
+    @Environment(\.dynamicTypeSize) private var typeSize
     let tally: Tally
 
     var body: some View {
-        HStack(spacing: Space.m) {
-            TallySwatch(text: tally.emojiOrInitial, colorIndex: tally.colorIndex, size: 46, finished: tally.isGoalReached)
-            VStack(alignment: .leading, spacing: 5) {
-                HStack(spacing: 6) {
-                    Text(tally.displayName)
-                        .font(.body.weight(.semibold))
-                        .foregroundStyle(theme.textColor)
-                        .lineLimit(1)
-                    if tally.hidden {
-                        Image(systemName: "eye.slash").font(.caption).foregroundStyle(theme.text2Color)
+        Group {
+            if typeSize.isAccessibilitySize {
+                // Very large text: stack it so names and numbers wrap instead of truncating.
+                VStack(alignment: .leading, spacing: Space.s) {
+                    HStack(spacing: Space.m) {
+                        TallySwatch(text: tally.emojiOrInitial, colorIndex: tally.colorIndex, size: 46, finished: tally.isGoalReached)
+                        Spacer(minLength: 0)
+                        valueColumn
+                        QuickCountButton(tally: tally)
                     }
-                    if tally.direction == .down {
-                        Image(systemName: "arrow.down").font(.caption2.weight(.heavy)).foregroundStyle(theme.text2Color)
-                            .accessibilityLabel("Counts down")
-                    }
-                }
-                if showMarks {
-                    TallyMarks(tally: tally, theme: theme)
-                        .frame(maxWidth: 176, alignment: .leading)
-                        .frame(height: 13)
-                }
-                HStack(spacing: 6) {
+                    nameLine(lineLimit: 3)
+                    marks
                     Text(tally.statusText)
                         .font(.caption.weight(.medium))
                         .foregroundStyle(tally.isGoalReached ? theme.actionColor : theme.text2Color)
-                    ForEach(tally.tags.prefix(2), id: \.self) { TagChip(text: $0) }
+                    if !tally.tags.isEmpty {
+                        HStack(spacing: 6) {
+                            ForEach(tally.tags.prefix(2), id: \.self) { TagChip(text: $0) }
+                        }
+                        .lineLimit(1)
+                    }
                 }
-                .lineLimit(1)
-            }
-            Spacer(minLength: 0)
-            VStack(alignment: .trailing, spacing: 0) {
-                Text("\(tally.value)")
-                    .font(tally.value.magnitude > 9999 ? theme.numeralFont(.title3, weight: .heavy) : theme.numeralFont(.title2, weight: .heavy))
-                    .monospacedDigit()
-                    .contentTransition(.numericText(value: Double(tally.value)))
-                    .foregroundStyle(theme.textColor)
-                if let target = tally.target {
-                    Text("of \(target)")
-                        .font(.caption2.weight(.semibold))
-                        .foregroundStyle(theme.text2Color)
+            } else {
+                HStack(spacing: Space.m) {
+                    TallySwatch(text: tally.emojiOrInitial, colorIndex: tally.colorIndex, size: 46, finished: tally.isGoalReached)
+                    VStack(alignment: .leading, spacing: 5) {
+                        nameLine(lineLimit: 1)
+                        marks
+                        HStack(spacing: 6) {
+                            Text(tally.statusText)
+                                .font(.caption.weight(.medium))
+                                .foregroundStyle(tally.isGoalReached ? theme.actionColor : theme.text2Color)
+                            ForEach(tally.tags.prefix(2), id: \.self) { TagChip(text: $0) }
+                        }
+                        .lineLimit(1)
+                    }
+                    Spacer(minLength: 0)
+                    valueColumn
+                    QuickCountButton(tally: tally)
                 }
             }
-            QuickCountButton(tally: tally)
         }
         .padding(.vertical, 6)
         .contentShape(Rectangle())
         .onTapGesture { router.openTally(tally.id) }
         .accessibilityElement(children: .combine)
-        .accessibilityLabel("\(tally.displayName), \(tally.value)\(tally.target.map { " of \($0)" } ?? ""), \(tally.statusText)")
+        .accessibilityLabel("\(tally.displayName), \(tally.value)\(tally.goalText.map { " \($0)" } ?? ""), \(tally.statusText)")
         .accessibilityAction(named: "Count") { count() }
         .accessibilityAction(named: "Open") { router.openTally(tally.id) }
         .swipeActions(edge: .trailing, allowsFullSwipe: true) {
@@ -89,6 +88,45 @@ struct TallyRow: View {
         } preview: {
             TallyPreviewCard(tally: tally)
                 .environment(\.theme, theme)
+        }
+    }
+
+    private func nameLine(lineLimit: Int) -> some View {
+        HStack(spacing: 6) {
+            Text(tally.displayName)
+                .font(.body.weight(.semibold))
+                .foregroundStyle(theme.textColor)
+                .lineLimit(lineLimit)
+            if tally.hidden {
+                Image(systemName: "eye.slash").font(.caption).foregroundStyle(theme.text2Color)
+            }
+            if tally.direction == .down {
+                Image(systemName: "arrow.down").font(.caption2.weight(.heavy)).foregroundStyle(theme.text2Color)
+                    .accessibilityLabel("Counts down")
+            }
+        }
+    }
+
+    @ViewBuilder private var marks: some View {
+        if showMarks {
+            TallyMarks(tally: tally, theme: theme)
+                .frame(maxWidth: 176, alignment: .leading)
+                .frame(height: 13)
+        }
+    }
+
+    private var valueColumn: some View {
+        VStack(alignment: .trailing, spacing: 0) {
+            Text("\(tally.value)")
+                .font(tally.value.magnitude > 9999 ? theme.numeralFont(.title3, weight: .heavy) : theme.numeralFont(.title2, weight: .heavy))
+                .monospacedDigit()
+                .contentTransition(.numericText(value: Double(tally.value)))
+                .foregroundStyle(theme.textColor)
+            if let goal = tally.goalText {
+                Text(goal)
+                    .font(.caption2.weight(.semibold))
+                    .foregroundStyle(theme.text2Color)
+            }
         }
     }
 

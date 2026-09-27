@@ -166,7 +166,7 @@ private struct SmallTally: View {
                         .minimumScaleFactor(0.4)
                         .lineLimit(1)
                         .contentTransition(.numericText(value: Double(tally.value)))
-                    Text(tally.target.map { "of \($0)" } ?? tally.statusText)
+                    Text(tally.goalText ?? tally.statusText)
                         .font(.caption2.weight(.semibold))
                         .opacity(0.85)
                     Spacer(minLength: 46)

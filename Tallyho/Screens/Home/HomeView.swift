@@ -404,7 +404,7 @@ private struct FolderHeader: View {
             Text(folder.displayName)
                 .font(.system(.title3, design: theme.numeralDesign, weight: .bold))
                 .foregroundStyle(theme.textColor)
-                .lineLimit(1)
+                .lineLimit(2)
             if folder.hidden {
                 Image(systemName: "eye.slash").font(.footnote).foregroundStyle(theme.text2Color)
             }

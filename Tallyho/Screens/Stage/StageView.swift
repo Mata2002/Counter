@@ -35,13 +35,35 @@ struct StageView: View {
             Haptics.prepare()
             if router.celebrateOnOpen {
                 router.celebrateOnOpen = false
-                celebrationStart = Date()
+                // Screenshot path: start the confetti mid-flight so a still frame shows it.
+                celebrationStart = Date().addingTimeInterval(-0.9)
             }
         }
         .onDisappear { UIApplication.shared.isIdleTimerDisabled = false }
     }
 
     private func stage(_ tally: Tally) -> some View {
+        // The outer reader keeps the real safe area (Dynamic Island, home indicator) so the controls
+        // stay clear of them; the inner one ignores it so the liquid fills the whole screen.
+        GeometryReader { outer in
+            let safeArea = outer.safeAreaInsets
+            stageBody(tally, safeArea: safeArea)
+        }
+        .offset(y: dragOffset)
+        .scaleEffect(1 - min(dragOffset, 300) / 3000)
+        .accessibilityElement(children: .contain)
+        .accessibilityAction(named: tally.direction == .up ? "Add \(tally.step)" : "Take away \(tally.step)") {
+            count(tally, at: CGPoint(x: 200, y: 400))
+        }
+        .confirmationDialog("Reset “\(tally.displayName)” to \(tally.start)?", isPresented: $confirmReset, titleVisibility: .visible) {
+            Button("Reset to \(tally.start)", role: .destructive) {
+                withAnimation(Motion.standard) { store.reset(tally.id) }
+                Haptics.light()
+            }
+        }
+    }
+
+    private func stageBody(_ tally: Tally, safeArea: EdgeInsets) -> some View {
         GeometryReader { geo in
             ZStack {
                 LiquidStage(colorIndex: tally.colorIndex, level: tally.fillLevel) { ink in
@@ -52,7 +74,7 @@ struct StageView: View {
 
                 RippleLayer(ripples: ripples, ink: theme.onTally(tally.colorIndex), numeralDesign: theme.numeralDesign)
 
-                controls(tally, safeArea: geo.safeAreaInsets)
+                controls(tally, safeArea: safeArea)
 
                 if let start = celebrationStart {
                     CelebrationView(tally: tally, start: start) {
@@ -86,18 +108,6 @@ struct StageView: View {
             )
         }
         .ignoresSafeArea()
-        .offset(y: dragOffset)
-        .scaleEffect(1 - min(dragOffset, 300) / 3000)
-        .accessibilityElement(children: .contain)
-        .accessibilityAction(named: tally.direction == .up ? "Add \(tally.step)" : "Take away \(tally.step)") {
-            count(tally, at: CGPoint(x: 200, y: 400))
-        }
-        .confirmationDialog("Reset “\(tally.displayName)” to \(tally.start)?", isPresented: $confirmReset, titleVisibility: .visible) {
-            Button("Reset to \(tally.start)", role: .destructive) {
-                withAnimation(Motion.standard) { store.reset(tally.id) }
-                Haptics.light()
-            }
-        }
     }
 
     // MARK: Controls
@@ -120,6 +130,7 @@ struct StageView: View {
                     }
                 }
                 .foregroundStyle(ink)
+                .dynamicTypeSize(...DynamicTypeSize.accessibility1)
                 .allowsHitTesting(false)
                 Spacer(minLength: 0)
                 Menu {
@@ -249,7 +260,7 @@ private struct StageNumeral: View {
             }
             .padding(.horizontal, Space.l)
             if let target = tally.target {
-                Text("of \(target)")
+                Text(tally.goalText ?? "\(target)")
                     .font(theme.numeralFont(.title2, weight: .bold))
                     .foregroundStyle(ink.opacity(0.85))
                 Text(tally.statusText)
@@ -257,6 +268,12 @@ private struct StageNumeral: View {
                     .foregroundStyle(ink)
                     .contentTransition(.numericText())
             } else {
+                // No goal: the taps pile up as tally marks, one mark per tap, twenty to a row.
+                let taps = abs(tally.value - tally.start) / max(tally.step, 1)
+                TallyMarks(total: 20, filled: Double(taps == 0 ? 0 : (taps - 1) % 20 + 1),
+                           color: ink, empty: ink.opacity(0.22), lineWidth: 4)
+                    .frame(width: min(size.width - Space.xl * 2, 280), height: 40)
+                    .animation(Motion.quick, value: taps)
                 Text(tally.statusText)
                     .font(.headline)
                     .foregroundStyle(ink.opacity(0.85))
