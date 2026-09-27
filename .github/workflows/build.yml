@@ -127,7 +127,7 @@ jobs:
           mkdir -p previews
           for f in shots/*.png; do
             name=$(basename "$f" .png)
-            case "$name" in 2[1-8]-*|01-*|02-*|05-*|06-*|31-*) ;; *) continue ;; esac
+            case "$name" in 21-*|22-*|27-*) ;; *) continue ;; esac
             sips -s format jpeg -s formatOptions 45 -Z 760 "$f" --out "previews/$name.jpg" >/dev/null
             echo "IMGBEGIN $name"
             base64 -i "previews/$name.jpg" | fold -w 2000

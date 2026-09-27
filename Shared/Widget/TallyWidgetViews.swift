@@ -114,47 +114,52 @@ struct WidgetSmallTally: View {
     let tally: Tally
 
     var body: some View {
-        ZStack(alignment: .bottom) {
+        ZStack {
             WidgetInkText(tally: tally) { ink in
-                VStack(alignment: .leading, spacing: 2) {
+                VStack(alignment: .leading, spacing: 0) {
                     HStack(spacing: 5) {
                         if !tally.emoji.isEmpty { Text(tally.emoji).font(.caption) }
                         Text(tally.displayName)
                             .font(.caption.weight(.bold))
                             .lineLimit(1)
                     }
+                    .padding(.trailing, 34) // room for the take-back button
                     Spacer(minLength: 0)
                     HStack(alignment: .firstTextBaseline, spacing: 4) {
                         Text("\(tally.value)")
-                            .font(theme.numeralFont(size: 44))
+                            .font(theme.numeralFont(size: 58))
                             .minimumScaleFactor(0.4)
                             .lineLimit(1)
                             .contentTransition(.numericText(value: Double(tally.value)))
                         if let goal = tally.goalText {
                             Text(goal)
-                                .font(theme.numeralFont(.caption, weight: .bold))
+                                .font(theme.numeralFont(.footnote, weight: .bold))
                                 .opacity(0.8)
                                 .lineLimit(1)
+                                .fixedSize()
                         }
                     }
                     widgetMarks(tally, ink: ink)
-                        .frame(width: 96, height: 10)
+                        .frame(width: 88, height: 10)
+                        .padding(.top, 2)
                     Text(widgetHeadline(tally))
                         .font(.caption2.weight(.bold))
                         .opacity(0.9)
                         .lineLimit(1)
-                    Spacer(minLength: 44)
+                        .padding(.top, 4)
+                        .padding(.trailing, 50) // room for the count button
                 }
                 .foregroundStyle(ink)
                 .frame(maxWidth: .infinity, maxHeight: .infinity, alignment: .leading)
                 .padding(14)
             }
-            HStack {
-                WidgetCountButton(tally: tally, reverse: true, size: 34, onLiquid: tally.fillLevel > 0.18)
-                Spacer()
-                WidgetCountButton(tally: tally, reverse: false, size: 44, onLiquid: tally.fillLevel > 0.22)
-            }
-            .padding(10)
+            // Take back sits small in the top corner; counting gets the big thumb-sized button.
+            WidgetCountButton(tally: tally, reverse: true, size: 30, onLiquid: tally.fillLevel > 0.86)
+                .frame(maxWidth: .infinity, maxHeight: .infinity, alignment: .topTrailing)
+                .padding(10)
+            WidgetCountButton(tally: tally, reverse: false, size: 46, onLiquid: tally.fillLevel > 0.2)
+                .frame(maxWidth: .infinity, maxHeight: .infinity, alignment: .bottomTrailing)
+                .padding(10)
         }
     }
 }
