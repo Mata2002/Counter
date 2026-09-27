@@ -1,0 +1,1201 @@
+[
+ {
+  "id": "riso",
+  "name": "Riso",
+  "kind": "everyday",
+  "scheme": "light",
+  "numeral": "rounded",
+  "particles": "tally",
+  "stage": "riso",
+  "mood": "Risograph print: fluoro pink and blue ink on warm paper, slightly off-register.",
+  "bg": "#F4EFE6",
+  "surface": "#FFFBF3",
+  "raised": "#EAE3D6",
+  "divider": "#DCD2C1",
+  "text": "#1E1B3A",
+  "text2": "#57526F",
+  "action": "#C8215F",
+  "onAction": "#FFFFFF",
+  "tallies": [
+   "#FF4F8B",
+   "#3255D8",
+   "#F6C700",
+   "#00A19A",
+   "#FF6A2B",
+   "#7A4FE0"
+  ],
+  "derived": [
+   {
+    "color": "#FF4F8B",
+    "base": "#FA9FB9",
+    "on": "#141414",
+    "onBase": "#141414",
+    "worst": 5.91557188461714
+   },
+   {
+    "color": "#3255D8",
+    "base": "#93A2DF",
+    "on": "#FFFFFF",
+    "onBase": "#141414",
+    "worst": 6.128532198977308
+   },
+   {
+    "color": "#F6C700",
+    "base": "#F5DB73",
+    "on": "#141414",
+    "onBase": "#141414",
+    "worst": 11.481569805844533
+   },
+   {
+    "color": "#00A19A",
+    "base": "#7AC8C0",
+    "on": "#141414",
+    "onBase": "#141414",
+    "worst": 5.758855348399099
+   },
+   {
+    "color": "#FF6A2B",
+    "base": "#FAAD89",
+    "on": "#141414",
+    "onBase": "#141414",
+    "worst": 6.446569332745316
+   },
+   {
+    "color": "#7A4FE0",
+    "base": "#B79FE3",
+    "on": "#FFFFFF",
+    "onBase": "#141414",
+    "worst": 5.220930414028075
+   }
+  ]
+ },
+ {
+  "id": "nightshift",
+  "name": "Night Shift",
+  "kind": "everyday",
+  "scheme": "dark",
+  "numeral": "default",
+  "particles": "tally",
+  "stage": "none",
+  "mood": "Ink-black and acid lime. Built for counting in a dark room.",
+  "bg": "#0B0E14",
+  "surface": "#141925",
+  "raised": "#1C2231",
+  "divider": "#29324A",
+  "text": "#F1F4FA",
+  "text2": "#9AA3B8",
+  "action": "#C6F432",
+  "onAction": "#0B0E14",
+  "tallies": [
+   "#C6F432",
+   "#3BD7FF",
+   "#FF6B6B",
+   "#A78BFA",
+   "#FFC24B",
+   "#FF7AD9"
+  ],
+  "derived": [
+   {
+    "color": "#C6F432",
+    "base": "#52651F",
+    "on": "#0B0E14",
+    "onBase": "#FFFFFF",
+    "worst": 6.481430226201269
+   },
+   {
+    "color": "#3BD7FF",
+    "base": "#1D5A6D",
+    "on": "#0B0E14",
+    "onBase": "#FFFFFF",
+    "worst": 7.676748183322245
+   },
+   {
+    "color": "#FF6B6B",
+    "base": "#683135",
+    "on": "#0B0E14",
+    "onBase": "#FFFFFF",
+    "worst": 6.960780970523859
+   },
+   {
+    "color": "#A78BFA",
+    "base": "#463E6B",
+    "on": "#0B0E14",
+    "onBase": "#FFFFFF",
+    "worst": 7.09800780659064
+   },
+   {
+    "color": "#FFC24B",
+    "base": "#685229",
+    "on": "#0B0E14",
+    "onBase": "#FFFFFF",
+    "worst": 7.426930550438071
+   },
+   {
+    "color": "#FF7AD9",
+    "base": "#68375F",
+    "on": "#0B0E14",
+    "onBase": "#FFFFFF",
+    "worst": 8.313293731030758
+   }
+  ]
+ },
+ {
+  "id": "sorbet",
+  "name": "Sorbet",
+  "kind": "everyday",
+  "scheme": "light",
+  "numeral": "rounded",
+  "particles": "tally",
+  "stage": "none",
+  "mood": "Peach, mint and lilac scoops on cream. Soft and sweet.",
+  "bg": "#FFF6EF",
+  "surface": "#FFFFFF",
+  "raised": "#FBE7DA",
+  "divider": "#F0D6C5",
+  "text": "#3A2330",
+  "text2": "#735561",
+  "action": "#B5305E",
+  "onAction": "#FFFFFF",
+  "tallies": [
+   "#FF9C7A",
+   "#3FBF95",
+   "#9C80EE",
+   "#F2BE3A",
+   "#FF6F91",
+   "#5AAEF2"
+  ],
+  "derived": [
+   {
+    "color": "#FF9C7A",
+    "base": "#FFC9B5",
+    "on": "#141414",
+    "onBase": "#141414",
+    "worst": 9.025652143961716
+   },
+   {
+    "color": "#3FBF95",
+    "base": "#9FDBC2",
+    "on": "#141414",
+    "onBase": "#141414",
+    "worst": 7.98104462001809
+   },
+   {
+    "color": "#9C80EE",
+    "base": "#CEBBEF",
+    "on": "#141414",
+    "onBase": "#141414",
+    "worst": 5.909126568414075
+   },
+   {
+    "color": "#F2BE3A",
+    "base": "#F9DA95",
+    "on": "#141414",
+    "onBase": "#141414",
+    "worst": 10.704308486968868
+   },
+   {
+    "color": "#FF6F91",
+    "base": "#FFB3C0",
+    "on": "#141414",
+    "onBase": "#141414",
+    "worst": 6.960773279656646
+   },
+   {
+    "color": "#5AAEF2",
+    "base": "#ADD2F1",
+    "on": "#141414",
+    "onBase": "#141414",
+    "worst": 7.694754326685002
+   }
+  ]
+ },
+ {
+  "id": "blueprint",
+  "name": "Blueprint",
+  "kind": "everyday",
+  "scheme": "dark",
+  "numeral": "mono",
+  "particles": "tally",
+  "stage": "grid",
+  "mood": "Drafting-table blue with white linework and a monospaced counter.",
+  "bg": "#0E2A5C",
+  "surface": "#133471",
+  "raised": "#1A3F85",
+  "divider": "#2E579F",
+  "text": "#EAF2FF",
+  "text2": "#AFC5EA",
+  "action": "#7FD8FF",
+  "onAction": "#0B2250",
+  "tallies": [
+   "#4FC3F7",
+   "#FFD166",
+   "#FF8A65",
+   "#7CE0B0",
+   "#C3A6FF",
+   "#F48FB1"
+  ],
+  "derived": [
+   {
+    "color": "#4FC3F7",
+    "base": "#276497",
+    "on": "#141414",
+    "onBase": "#FFFFFF",
+    "worst": 6.257433168327546
+   },
+   {
+    "color": "#FFD166",
+    "base": "#6A6960",
+    "on": "#141414",
+    "onBase": "#FFFFFF",
+    "worst": 5.522871234561047
+   },
+   {
+    "color": "#FF8A65",
+    "base": "#6A4E5F",
+    "on": "#141414",
+    "onBase": "#FFFFFF",
+    "worst": 7.322597944321612
+   },
+   {
+    "color": "#7CE0B0",
+    "base": "#386F7C",
+    "on": "#141414",
+    "onBase": "#FFFFFF",
+    "worst": 5.625542049727114
+   },
+   {
+    "color": "#C3A6FF",
+    "base": "#53599A",
+    "on": "#141414",
+    "onBase": "#FFFFFF",
+    "worst": 6.435065261636019
+   },
+   {
+    "color": "#F48FB1",
+    "base": "#65507C",
+    "on": "#141414",
+    "onBase": "#FFFFFF",
+    "worst": 7.019064154595119
+   }
+  ]
+ },
+ {
+  "id": "chalk",
+  "name": "Chalk",
+  "kind": "everyday",
+  "scheme": "dark",
+  "numeral": "rounded",
+  "particles": "tally",
+  "stage": "none",
+  "mood": "A slate chalkboard and dusty pastel chalk. Tally marks were made for this.",
+  "bg": "#1F2A26",
+  "surface": "#26332E",
+  "raised": "#2F3E38",
+  "divider": "#3E4F48",
+  "text": "#F2F0E6",
+  "text2": "#B7BFB5",
+  "action": "#F6E27A",
+  "onAction": "#1F2A26",
+  "tallies": [
+   "#F28B82",
+   "#F6E27A",
+   "#9AD1F5",
+   "#B7E4A8",
+   "#D7B8F3",
+   "#FFB870"
+  ],
+  "derived": [
+   {
+    "color": "#F28B82",
+    "base": "#6F4F49",
+    "on": "#141414",
+    "onBase": "#FFFFFF",
+    "worst": 7.265173486087123
+   },
+   {
+    "color": "#F6E27A",
+    "base": "#717046",
+    "on": "#141414",
+    "onBase": "#FFFFFF",
+    "worst": 5.111666070530424
+   },
+   {
+    "color": "#9AD1F5",
+    "base": "#4E6975",
+    "on": "#141414",
+    "onBase": "#FFFFFF",
+    "worst": 5.830998939540773
+   },
+   {
+    "color": "#B7E4A8",
+    "base": "#597157",
+    "on": "#141414",
+    "onBase": "#FFFFFF",
+    "worst": 5.3510760958137285
+   },
+   {
+    "color": "#D7B8F3",
+    "base": "#656074",
+    "on": "#141414",
+    "onBase": "#FFFFFF",
+    "worst": 6.036773295356544
+   },
+   {
+    "color": "#FFB870",
+    "base": "#746042",
+    "on": "#141414",
+    "onBase": "#FFFFFF",
+    "worst": 6.0095832056496725
+   }
+  ]
+ },
+ {
+  "id": "espresso",
+  "name": "Espresso",
+  "kind": "everyday",
+  "scheme": "dark",
+  "numeral": "serif",
+  "particles": "tally",
+  "stage": "none",
+  "mood": "Dark roast, steamed cream and caramel, with bookish serif numbers.",
+  "bg": "#1B1411",
+  "surface": "#251C18",
+  "raised": "#30251F",
+  "divider": "#433428",
+  "text": "#F5EBDD",
+  "text2": "#C4B09A",
+  "action": "#E8A860",
+  "onAction": "#1B1411",
+  "tallies": [
+   "#E8A860",
+   "#EFD9B4",
+   "#E0788A",
+   "#A6C293",
+   "#E8845A",
+   "#8FB3D6"
+  ],
+  "derived": [
+   {
+    "color": "#E8A860",
+    "base": "#694C2F",
+    "on": "#141414",
+    "onBase": "#FFFFFF",
+    "worst": 7.849072745309189
+   },
+   {
+    "color": "#EFD9B4",
+    "base": "#6C5F4F",
+    "on": "#141414",
+    "onBase": "#FFFFFF",
+    "worst": 6.199417091361704
+   },
+   {
+    "color": "#E0788A",
+    "base": "#663A3F",
+    "on": "#141414",
+    "onBase": "#FFFFFF",
+    "worst": 6.3365125599027605
+   },
+   {
+    "color": "#A6C293",
+    "base": "#505642",
+    "on": "#141414",
+    "onBase": "#FFFFFF",
+    "worst": 7.633921892526649
+   },
+   {
+    "color": "#E8845A",
+    "base": "#693F2D",
+    "on": "#141414",
+    "onBase": "#FFFFFF",
+    "worst": 6.912226519988847
+   },
+   {
+    "color": "#8FB3D6",
+    "base": "#47505C",
+    "on": "#141414",
+    "onBase": "#FFFFFF",
+    "worst": 8.171447027287037
+   }
+  ]
+ },
+ {
+  "id": "swiss",
+  "name": "Swiss",
+  "kind": "everyday",
+  "scheme": "light",
+  "numeral": "default",
+  "particles": "tally",
+  "stage": "none",
+  "mood": "Grid, black, and one loud red. Posters from 1965.",
+  "bg": "#F2F2F0",
+  "surface": "#FFFFFF",
+  "raised": "#E5E5E2",
+  "divider": "#D2D2CE",
+  "text": "#111111",
+  "text2": "#555555",
+  "action": "#D21F16",
+  "onAction": "#FFFFFF",
+  "tallies": [
+   "#E2231A",
+   "#1A1A1A",
+   "#FFCC00",
+   "#0057B8",
+   "#7D7D7D",
+   "#FF6A00"
+  ],
+  "derived": [
+   {
+    "color": "#E2231A",
+    "base": "#EA8B85",
+    "on": "#FFFFFF",
+    "onBase": "#111111",
+    "worst": 4.6780195328162035
+   },
+   {
+    "color": "#1A1A1A",
+    "base": "#868685",
+    "on": "#FFFFFF",
+    "onBase": "#111111",
+    "worst": 5.181508709843219
+   },
+   {
+    "color": "#FFCC00",
+    "base": "#F9DF78",
+    "on": "#111111",
+    "onBase": "#111111",
+    "worst": 12.489028356147196
+   },
+   {
+    "color": "#0057B8",
+    "base": "#79A5D4",
+    "on": "#FFFFFF",
+    "onBase": "#111111",
+    "worst": 6.8730404025041505
+   },
+   {
+    "color": "#7D7D7D",
+    "base": "#B8B8B7",
+    "on": "#111111",
+    "onBase": "#111111",
+    "worst": 4.587302219076391
+   },
+   {
+    "color": "#FF6A00",
+    "base": "#F9AE78",
+    "on": "#111111",
+    "onBase": "#111111",
+    "worst": 6.576352970033166
+   }
+  ]
+ },
+ {
+  "id": "citrus",
+  "name": "Citrus",
+  "kind": "everyday",
+  "scheme": "light",
+  "numeral": "rounded",
+  "particles": "tally",
+  "stage": "none",
+  "mood": "Lemon, lime and grapefruit. Sunny and loud.",
+  "bg": "#FFFBEA",
+  "surface": "#FFFFFF",
+  "raised": "#FFF0BF",
+  "divider": "#F1DE98",
+  "text": "#2B2410",
+  "text2": "#665A34",
+  "action": "#B03A06",
+  "onAction": "#FFFFFF",
+  "tallies": [
+   "#FFD23F",
+   "#8CCB3F",
+   "#FF8C2B",
+   "#FF5E5B",
+   "#2FBF97",
+   "#2E9E5B"
+  ],
+  "derived": [
+   {
+    "color": "#FFD23F",
+    "base": "#FFE795",
+    "on": "#141414",
+    "onBase": "#141414",
+    "worst": 12.757530478688908
+   },
+   {
+    "color": "#8CCB3F",
+    "base": "#C6E395",
+    "on": "#141414",
+    "onBase": "#141414",
+    "worst": 9.412372349457955
+   },
+   {
+    "color": "#FF8C2B",
+    "base": "#FFC48B",
+    "on": "#141414",
+    "onBase": "#141414",
+    "worst": 7.928811282228321
+   },
+   {
+    "color": "#FF5E5B",
+    "base": "#FFADA3",
+    "on": "#141414",
+    "onBase": "#141414",
+    "worst": 6.144483939841532
+   },
+   {
+    "color": "#2FBF97",
+    "base": "#97DDC1",
+    "on": "#141414",
+    "onBase": "#141414",
+    "worst": 7.912971670876522
+   },
+   {
+    "color": "#2E9E5B",
+    "base": "#97CDA3",
+    "on": "#141414",
+    "onBase": "#141414",
+    "worst": 5.4021705852608095
+   }
+  ]
+ },
+ {
+  "id": "newyear",
+  "name": "New Year",
+  "kind": "holiday",
+  "scheme": "dark",
+  "numeral": "serif",
+  "particles": "fireworks",
+  "stage": "none",
+  "mood": "Midnight, champagne and gold.",
+  "signature": "Finishing a tally sets off fireworks.",
+  "bg": "#0A0C18",
+  "surface": "#131629",
+  "raised": "#1B1F37",
+  "divider": "#2A2F4E",
+  "text": "#F6F1E4",
+  "text2": "#AEB0C6",
+  "action": "#E9C660",
+  "onAction": "#1A1403",
+  "tallies": [
+   "#E9C660",
+   "#C9CED8",
+   "#8C9BFF",
+   "#F2A6C4",
+   "#7FD9C4",
+   "#F08A5D"
+  ],
+  "derived": [
+   {
+    "color": "#E9C660",
+    "base": "#5F5333",
+    "on": "#0A0C18",
+    "onBase": "#FFFFFF",
+    "worst": 7.576618277922668
+   },
+   {
+    "color": "#C9CED8",
+    "base": "#535661",
+    "on": "#0A0C18",
+    "onBase": "#FFFFFF",
+    "worst": 7.3131774152497595
+   },
+   {
+    "color": "#8C9BFF",
+    "base": "#3B4270",
+    "on": "#0A0C18",
+    "onBase": "#FFFFFF",
+    "worst": 7.646006938822998
+   },
+   {
+    "color": "#F2A6C4",
+    "base": "#624759",
+    "on": "#0A0C18",
+    "onBase": "#FFFFFF",
+    "worst": 8.187507599122567
+   },
+   {
+    "color": "#7FD9C4",
+    "base": "#365A59",
+    "on": "#0A0C18",
+    "onBase": "#FFFFFF",
+    "worst": 7.598857178350108
+   },
+   {
+    "color": "#F08A5D",
+    "base": "#613C32",
+    "on": "#0A0C18",
+    "onBase": "#FFFFFF",
+    "worst": 7.878586152245633
+   }
+  ]
+ },
+ {
+  "id": "valentine",
+  "name": "Valentine’s",
+  "kind": "holiday",
+  "scheme": "light",
+  "numeral": "serif",
+  "particles": "hearts",
+  "stage": "none",
+  "mood": "Rose, blush and wine.",
+  "signature": "Finishing a tally rains hearts.",
+  "bg": "#FFF1F2",
+  "surface": "#FFFFFF",
+  "raised": "#FCE0E3",
+  "divider": "#F2C9CE",
+  "text": "#3A1119",
+  "text2": "#7A4953",
+  "action": "#B01F3D",
+  "onAction": "#FFFFFF",
+  "tallies": [
+   "#E23E57",
+   "#FF8FA3",
+   "#8E1C32",
+   "#F3A95F",
+   "#C45C9A",
+   "#7E5BD6"
+  ],
+  "derived": [
+   {
+    "color": "#E23E57",
+    "base": "#F198A5",
+    "on": "#141414",
+    "onBase": "#141414",
+    "worst": 4.43932584466823
+   },
+   {
+    "color": "#FF8FA3",
+    "base": "#FFC0CB",
+    "on": "#141414",
+    "onBase": "#141414",
+    "worst": 8.518100832903524
+   },
+   {
+    "color": "#8E1C32",
+    "base": "#C78792",
+    "on": "#FFFFFF",
+    "onBase": "#141414",
+    "worst": 6.411986944470389
+   },
+   {
+    "color": "#F3A95F",
+    "base": "#F9CDA9",
+    "on": "#141414",
+    "onBase": "#141414",
+    "worst": 9.34405836860944
+   },
+   {
+    "color": "#C45C9A",
+    "base": "#E2A7C6",
+    "on": "#141414",
+    "onBase": "#141414",
+    "worst": 4.688649244411815
+   },
+   {
+    "color": "#7E5BD6",
+    "base": "#BFA6E4",
+    "on": "#FFFFFF",
+    "onBase": "#141414",
+    "worst": 4.822524131978293
+   }
+  ]
+ },
+ {
+  "id": "stpatricks",
+  "name": "St. Patrick’s",
+  "kind": "holiday",
+  "scheme": "light",
+  "numeral": "rounded",
+  "particles": "clovers",
+  "stage": "none",
+  "mood": "Shamrock green and a little gold.",
+  "signature": "Finishing a tally showers clovers.",
+  "bg": "#F1F7EE",
+  "surface": "#FFFFFF",
+  "raised": "#E0EEDA",
+  "divider": "#C9DEC1",
+  "text": "#12291A",
+  "text2": "#48604E",
+  "action": "#16703A",
+  "onAction": "#FFFFFF",
+  "tallies": [
+   "#1E9E4A",
+   "#7CC242",
+   "#E2B93B",
+   "#0E6B3A",
+   "#F08A3C",
+   "#4BA3A0"
+  ],
+  "derived": [
+   {
+    "color": "#1E9E4A",
+    "base": "#88CB9C",
+    "on": "#141414",
+    "onBase": "#141414",
+    "worst": 5.302909694663738
+   },
+   {
+    "color": "#7CC242",
+    "base": "#B7DD98",
+    "on": "#141414",
+    "onBase": "#141414",
+    "worst": 8.467700547668398
+   },
+   {
+    "color": "#E2B93B",
+    "base": "#EAD895",
+    "on": "#141414",
+    "onBase": "#141414",
+    "worst": 9.857362445300058
+   },
+   {
+    "color": "#0E6B3A",
+    "base": "#80B194",
+    "on": "#FFFFFF",
+    "onBase": "#141414",
+    "worst": 6.597864329175717
+   },
+   {
+    "color": "#F08A3C",
+    "base": "#F1C195",
+    "on": "#141414",
+    "onBase": "#141414",
+    "worst": 7.374009064639076
+   },
+   {
+    "color": "#4BA3A0",
+    "base": "#9ECDC7",
+    "on": "#141414",
+    "onBase": "#141414",
+    "worst": 6.180902378697669
+   }
+  ]
+ },
+ {
+  "id": "easter",
+  "name": "Easter",
+  "kind": "holiday",
+  "scheme": "light",
+  "numeral": "rounded",
+  "particles": "eggs",
+  "stage": "none",
+  "mood": "Dyed-egg pastels on a spring morning.",
+  "signature": "Finishing a tally tumbles painted eggs.",
+  "bg": "#FBF7FF",
+  "surface": "#FFFFFF",
+  "raised": "#EFE7FB",
+  "divider": "#DDD2F0",
+  "text": "#2A2140",
+  "text2": "#655A80",
+  "action": "#6B47C6",
+  "onAction": "#FFFFFF",
+  "tallies": [
+   "#A98BF5",
+   "#FF9EB5",
+   "#63C7A6",
+   "#F7C548",
+   "#6FB6F2",
+   "#FF9A6C"
+  ],
+  "derived": [
+   {
+    "color": "#A98BF5",
+    "base": "#D2C1FA",
+    "on": "#141414",
+    "onBase": "#141414",
+    "worst": 6.753671214165308
+   },
+   {
+    "color": "#FF9EB5",
+    "base": "#FDCBDA",
+    "on": "#141414",
+    "onBase": "#141414",
+    "worst": 9.483204950957393
+   },
+   {
+    "color": "#63C7A6",
+    "base": "#AFDFD3",
+    "on": "#141414",
+    "onBase": "#141414",
+    "worst": 8.992420666650084
+   },
+   {
+    "color": "#F7C548",
+    "base": "#F9DEA4",
+    "on": "#141414",
+    "onBase": "#141414",
+    "worst": 11.43505080270292
+   },
+   {
+    "color": "#6FB6F2",
+    "base": "#B5D7F9",
+    "on": "#141414",
+    "onBase": "#141414",
+    "worst": 8.464928878294744
+   },
+   {
+    "color": "#FF9A6C",
+    "base": "#FDC9B6",
+    "on": "#141414",
+    "onBase": "#141414",
+    "worst": 8.852276320570084
+   }
+  ]
+ },
+ {
+  "id": "july4",
+  "name": "Fourth of July",
+  "kind": "holiday",
+  "scheme": "dark",
+  "numeral": "default",
+  "particles": "stars",
+  "stage": "none",
+  "mood": "Navy night, red, white and fireworks.",
+  "signature": "Finishing a tally bursts stars and fireworks.",
+  "bg": "#0B1633",
+  "surface": "#122049",
+  "raised": "#1A2B5C",
+  "divider": "#2A3D76",
+  "text": "#F4F6FB",
+  "text2": "#AFB9D6",
+  "action": "#FF4D5E",
+  "onAction": "#16060A",
+  "tallies": [
+   "#FF4D5E",
+   "#F4F6FB",
+   "#4F8BFF",
+   "#FFD166",
+   "#7AD7F0",
+   "#FF8FB1"
+  ],
+  "derived": [
+   {
+    "color": "#FF4D5E",
+    "base": "#682B43",
+    "on": "#141414",
+    "onBase": "#FFFFFF",
+    "worst": 5.680441009750743
+   },
+   {
+    "color": "#F4F6FB",
+    "base": "#646B7F",
+    "on": "#141414",
+    "onBase": "#FFFFFF",
+    "worst": 5.314566333023911
+   },
+   {
+    "color": "#4F8BFF",
+    "base": "#254281",
+    "on": "#141414",
+    "onBase": "#FFFFFF",
+    "worst": 5.675457395998926
+   },
+   {
+    "color": "#FFD166",
+    "base": "#685D46",
+    "on": "#141414",
+    "onBase": "#FFFFFF",
+    "worst": 6.4759033294301656
+   },
+   {
+    "color": "#7AD7F0",
+    "base": "#355F7B",
+    "on": "#141414",
+    "onBase": "#FFFFFF",
+    "worst": 6.830884434369358
+   },
+   {
+    "color": "#FF8FB1",
+    "base": "#684463",
+    "on": "#141414",
+    "onBase": "#FFFFFF",
+    "worst": 8.090519490139906
+   }
+  ]
+ },
+ {
+  "id": "halloween",
+  "name": "Halloween",
+  "kind": "holiday",
+  "scheme": "dark",
+  "numeral": "rounded",
+  "particles": "bats",
+  "stage": "none",
+  "mood": "Pumpkin orange, potion purple and a full moon.",
+  "signature": "Finishing a tally sends up a flurry of bats.",
+  "bg": "#140E18",
+  "surface": "#1D1523",
+  "raised": "#271D2F",
+  "divider": "#3A2C45",
+  "text": "#F6EEF7",
+  "text2": "#B7A6BE",
+  "action": "#FF8A2A",
+  "onAction": "#230E00",
+  "tallies": [
+   "#FF8A2A",
+   "#A868D6",
+   "#A3CF4A",
+   "#F4E9C9",
+   "#FF5A5F",
+   "#6FD3C8"
+  ],
+  "derived": [
+   {
+    "color": "#FF8A2A",
+    "base": "#6D3D1F",
+    "on": "#140E18",
+    "onBase": "#FFFFFF",
+    "worst": 8.067674478337203
+   },
+   {
+    "color": "#A868D6",
+    "base": "#4C3060",
+    "on": "#140E18",
+    "onBase": "#FFFFFF",
+    "worst": 5.0789995167484765
+   },
+   {
+    "color": "#A3CF4A",
+    "base": "#4A572B",
+    "on": "#140E18",
+    "onBase": "#FFFFFF",
+    "worst": 7.808634022790926
+   },
+   {
+    "color": "#F4E9C9",
+    "base": "#69615B",
+    "on": "#140E18",
+    "onBase": "#FFFFFF",
+    "worst": 6.066566894327963
+   },
+   {
+    "color": "#FF5A5F",
+    "base": "#6D2B33",
+    "on": "#140E18",
+    "onBase": "#FFFFFF",
+    "worst": 6.221763585903552
+   },
+   {
+    "color": "#6FD3C8",
+    "base": "#37595B",
+    "on": "#140E18",
+    "onBase": "#FFFFFF",
+    "worst": 7.657351462435063
+   }
+  ]
+ },
+ {
+  "id": "thanksgiving",
+  "name": "Thanksgiving",
+  "kind": "holiday",
+  "scheme": "light",
+  "numeral": "serif",
+  "particles": "leaves",
+  "stage": "none",
+  "mood": "Harvest orange, cranberry and golden wheat.",
+  "signature": "Finishing a tally drifts autumn leaves.",
+  "bg": "#FBF3E8",
+  "surface": "#FFFCF6",
+  "raised": "#F2E3CF",
+  "divider": "#E3CFB2",
+  "text": "#2E1D10",
+  "text2": "#6B5440",
+  "action": "#A6400F",
+  "onAction": "#FFFFFF",
+  "tallies": [
+   "#E07A2E",
+   "#B8322F",
+   "#D9A441",
+   "#7A8B3A",
+   "#8C5A3C",
+   "#C9744A"
+  ],
+  "derived": [
+   {
+    "color": "#E07A2E",
+    "base": "#EEB78B",
+    "on": "#141414",
+    "onBase": "#141414",
+    "worst": 6.13446195943972
+   },
+   {
+    "color": "#B8322F",
+    "base": "#DA938C",
+    "on": "#FFFFFF",
+    "onBase": "#141414",
+    "worst": 5.939993377927703
+   },
+   {
+    "color": "#D9A441",
+    "base": "#EACC95",
+    "on": "#141414",
+    "onBase": "#141414",
+    "worst": 8.19088524333789
+   },
+   {
+    "color": "#7A8B3A",
+    "base": "#BBBF91",
+    "on": "#141414",
+    "onBase": "#141414",
+    "worst": 4.896587463644273
+   },
+   {
+    "color": "#8C5A3C",
+    "base": "#C4A792",
+    "on": "#FFFFFF",
+    "onBase": "#141414",
+    "worst": 5.764789307831541
+   },
+   {
+    "color": "#C9744A",
+    "base": "#E2B499",
+    "on": "#141414",
+    "onBase": "#141414",
+    "worst": 5.334236872793505
+   }
+  ]
+ },
+ {
+  "id": "christmas",
+  "name": "Christmas",
+  "kind": "holiday",
+  "scheme": "dark",
+  "numeral": "serif",
+  "particles": "snow",
+  "stage": "none",
+  "mood": "Pine green, cranberry and candlelight.",
+  "signature": "Finishing a tally starts a snowfall.",
+  "bg": "#0F1E17",
+  "surface": "#16291F",
+  "raised": "#1E3528",
+  "divider": "#2D4A39",
+  "text": "#F7F1E6",
+  "text2": "#B9C4B5",
+  "action": "#FF6B5E",
+  "onAction": "#2A0604",
+  "tallies": [
+   "#E84A3F",
+   "#3FB36F",
+   "#F2D27A",
+   "#F7F1E6",
+   "#7FB8E0",
+   "#D98AC0"
+  ],
+  "derived": [
+   {
+    "color": "#E84A3F",
+    "base": "#612F26",
+    "on": "#141414",
+    "onBase": "#FFFFFF",
+    "worst": 4.809553088864332
+   },
+   {
+    "color": "#3FB36F",
+    "base": "#215738",
+    "on": "#141414",
+    "onBase": "#FFFFFF",
+    "worst": 6.920672713987249
+   },
+   {
+    "color": "#F2D27A",
+    "base": "#65623D",
+    "on": "#141414",
+    "onBase": "#FFFFFF",
+    "worst": 6.2355289675414705
+   },
+   {
+    "color": "#F7F1E6",
+    "base": "#676E66",
+    "on": "#141414",
+    "onBase": "#FFFFFF",
+    "worst": 5.251382543436445
+   },
+   {
+    "color": "#7FB8E0",
+    "base": "#3A5963",
+    "on": "#141414",
+    "onBase": "#FFFFFF",
+    "worst": 7.529499418737581
+   },
+   {
+    "color": "#D98AC0",
+    "base": "#5C4757",
+    "on": "#141414",
+    "onBase": "#FFFFFF",
+    "worst": 7.322421665548295
+   }
+  ]
+ },
+ {
+  "id": "nowruz",
+  "name": "Nowruz",
+  "kind": "holiday",
+  "scheme": "light",
+  "numeral": "rounded",
+  "particles": "spring",
+  "stage": "none",
+  "mood": "Sabzeh green, turquoise, goldfish orange and hyacinth.",
+  "signature": "Finishing a tally releases goldfish and blossoms.",
+  "bg": "#F1F8F2",
+  "surface": "#FFFFFF",
+  "raised": "#E1F0E3",
+  "divider": "#CBE2CF",
+  "text": "#13261B",
+  "text2": "#4A6354",
+  "action": "#0B6B63",
+  "onAction": "#FFFFFF",
+  "tallies": [
+   "#3FA34D",
+   "#1FA7A0",
+   "#F28C28",
+   "#8A63C4",
+   "#E0B84B",
+   "#E0607E"
+  ],
+  "derived": [
+   {
+    "color": "#3FA34D",
+    "base": "#98CEA0",
+    "on": "#141414",
+    "onBase": "#141414",
+    "worst": 5.752563072365061
+   },
+   {
+    "color": "#1FA7A0",
+    "base": "#88D0C9",
+    "on": "#141414",
+    "onBase": "#141414",
+    "worst": 6.2227475233352605
+   },
+   {
+    "color": "#F28C28",
+    "base": "#F2C28D",
+    "on": "#141414",
+    "onBase": "#141414",
+    "worst": 7.507027956642223
+   },
+   {
+    "color": "#8A63C4",
+    "base": "#BEAEDB",
+    "on": "#FFFFFF",
+    "onBase": "#141414",
+    "worst": 4.504026038910542
+   },
+   {
+    "color": "#E0B84B",
+    "base": "#E9D89F",
+    "on": "#141414",
+    "onBase": "#141414",
+    "worst": 9.761535656701025
+   },
+   {
+    "color": "#E0607E",
+    "base": "#E9ACB8",
+    "on": "#141414",
+    "onBase": "#141414",
+    "worst": 5.389801346184501
+   }
+  ]
+ }
+]
